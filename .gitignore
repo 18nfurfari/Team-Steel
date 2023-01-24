@@ -9,6 +9,7 @@ Tanks-3D/[Bb]uild/
 Tanks-3D/[Bb]uilds/
 Tanks-3D/[Ll]ogs/
 Tanks-3D/[Mm]emoryCaptures/
+Tanks-3D/[Uu]ser[Ss]ettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !Tanks-3D/[Aa]ssets/**/*.meta
