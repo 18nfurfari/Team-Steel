@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     private Vector2 playerInput;
     [SerializeField] CharacterController controller;
     [SerializeField] private float playerSpeed = 3f;
     [SerializeField] private float playerRotation = 40f;
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            Destroy(this);
+        }
+    }
 
     private void OnMove(InputValue value)
     {
