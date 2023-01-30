@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections;
+using GameFramework.Events;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -72,6 +73,7 @@ namespace GameFramework.Manager
                 if (newLobby.LastUpdated > _lobby.LastUpdated)
                 {
                     _lobby = newLobby;
+                    LobbyEvents.OnLobbyUpdated?.Invoke(_lobby);
                 }
                 
                 yield return new WaitForSecondsRealtime(waitTimeSeconds);
@@ -118,6 +120,18 @@ namespace GameFramework.Manager
             
             _refreshLobbyCoroutine = StartCoroutine(RefreshLobbyCoroutine(_lobby.Id, 1f));
             return true;
+        }
+
+        public List<Dictionary<string, PlayerDataObject>> GetPlayersData()
+        {
+            List<Dictionary<string, PlayerDataObject>> data = new List<Dictionary<string, PlayerDataObject>>();
+
+            foreach (Player player in _lobby.Players)
+            {
+                data.Add(player.Data);
+            }
+
+            return data;
         }
     }
 }
