@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
@@ -24,7 +25,12 @@ public class MainMenuController : MonoBehaviour
 
     private async void OnHostClicked()
     {
-        await GameLobbyManager.Instance.CreateLobby();
+        // If lobby creation success, send to lobby scene
+        bool success = await GameLobbyManager.Instance.CreateLobby();
+        if (success)
+        {
+            SceneManager.LoadSceneAsync("Lobby");
+        }
     }
 
     private void OnJoinClicked()

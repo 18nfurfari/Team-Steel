@@ -18,4 +18,9 @@ public class GameLobbyManager : GameFramework.Core.Singleton<GameLobbyManager>
         
         return success;
     }
+
+    public string GetLobbyCode()
+    {
+        return LobbyManager.Instance.GetLobbyCode();
+    }
 }
