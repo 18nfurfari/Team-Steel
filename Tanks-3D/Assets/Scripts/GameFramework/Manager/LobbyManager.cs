@@ -100,6 +100,24 @@ namespace GameFramework.Manager
             }
         }
 
-        
+
+        public async Task<bool> JoinLobby(string code, Dictionary<string, string> playerData)
+        {
+            JoinLobbyByCodeOptions options = new JoinLobbyByCodeOptions();
+            Player player = new Player(AuthenticationService.Instance.PlayerId, null, SerializePlayerData(playerData));
+
+            options.Player = player;
+            try
+            {
+                _lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code, options);
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            
+            _refreshLobbyCoroutine = StartCoroutine(RefreshLobbyCoroutine(_lobby.Id, 1f));
+            return true;
+        }
     }
 }

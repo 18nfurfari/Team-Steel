@@ -23,4 +23,15 @@ public class GameLobbyManager : GameFramework.Core.Singleton<GameLobbyManager>
     {
         return LobbyManager.Instance.GetLobbyCode();
     }
+
+    public async Task<bool> JoinLobby(string code)
+    {
+        Dictionary<string, string> playerData = new Dictionary<string, string>()
+        {
+            { "PlayerID", "JoinPlayer" }
+        };
+
+        bool success = await LobbyManager.Instance.JoinLobby(code, playerData);
+        return success;
+    }
 }
