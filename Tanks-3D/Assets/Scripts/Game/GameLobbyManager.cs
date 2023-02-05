@@ -15,7 +15,7 @@ namespace Game
 {
     public class GameLobbyManager : GameFramework.Core.Singleton<GameLobbyManager>
     {
-        private List<LobbyPlayerData> LobbyPlayerDatas = new List<LobbyPlayerData>();
+        private List<LobbyPlayerData> lobbyPlayerData = new List<LobbyPlayerData>();
         private LobbyPlayerData localLobbyPlayerData;
     
         private void OnEnable()
@@ -32,7 +32,7 @@ namespace Game
         {
             List<Dictionary<string, PlayerDataObject>> playerData = LobbyManager.Instance.GetPlayersData();
             
-            LobbyPlayerDatas.Clear();
+            lobbyPlayerData.Clear();
     
             foreach (Dictionary<string, PlayerDataObject> data in playerData)
             {
@@ -45,7 +45,7 @@ namespace Game
                     localLobbyPlayerData = lobbyPlayerData;
                 }
     
-                LobbyPlayerDatas.Add(localLobbyPlayerData);
+                this.lobbyPlayerData.Add(localLobbyPlayerData);
             }
             
             Events.LobbyEvents.OnLobbyUpdated?.Invoke();
@@ -73,6 +73,11 @@ namespace Game
     
             bool success = await LobbyManager.Instance.JoinLobby(code, playerData.Serialize());
             return success;
+        }
+
+        public List<LobbyPlayerData> GetPlayers()
+        {
+            return lobbyPlayerData;
         }
     }
 }
