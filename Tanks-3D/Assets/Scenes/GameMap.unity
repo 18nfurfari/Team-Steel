@@ -280,7 +280,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1197835565}
-    PlayerPrefab: {fileID: 8047171041428702554, guid: 8f441ac8a617eda4d8b13820b36a79a1, type: 3}
+    PlayerPrefab: {fileID: 1488040279437534, guid: 41580a6c3ea036540bde5df606c5e42d, type: 3}
     NetworkPrefabs: []
     TickRate: 30
     ClientConnectionBufferTimeout: 10
