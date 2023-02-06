@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Networking.Transport.Utilities;
 using Unity.Services.Lobbies.Models;
-using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -62,7 +61,7 @@ public class PlayerController : NetworkBehaviour
     private void PlayerMovement()
     {
         // playerInput.y only allows forward and backward movement
-        controller.Move(transform.forward * _playerInput.y * playerSpeed * Time.deltaTime);
+        controller.Move(transform.forward * (_playerInput.y * playerSpeed * Time.deltaTime));
 
         // playerInput.x only allows player side to side rotation
         transform.Rotate(transform.up, playerRotation * _playerInput.x * Time.deltaTime);
@@ -71,6 +70,11 @@ public class PlayerController : NetworkBehaviour
     
     private void Update()
     {
+        if (!controller.isGrounded)
+        {
+            controller.Move(new Vector3(0, -1, 0));
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Fire!");
