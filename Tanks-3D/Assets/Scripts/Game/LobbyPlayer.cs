@@ -8,12 +8,12 @@ namespace Game
     {
         [SerializeField] private TextMeshProUGUI playerName;
 
-        private LobbyPlayerData data;
+        private LobbyPlayerData _data;
         
         public void setData(LobbyPlayerData data)
         {
-            this.data = data;
-            playerName.text = data.Gamertag;
+            _data = data;
+            playerName.text = _data.Gamertag;
             gameObject.SetActive(true);
         }
     }
