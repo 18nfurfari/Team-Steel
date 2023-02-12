@@ -56,7 +56,7 @@ namespace Game
             LobbyPlayerData playerData = new LobbyPlayerData();
             playerData.Initialize(AuthenticationService.Instance.PlayerId, gamertag: "HostPlayer");
             
-            bool success = await LobbyManager.Instance.CreateLobby(2, true, playerData.Serialize());
+            bool success = await LobbyManager.Instance.CreateLobby(4, true, playerData.Serialize());
             
             return success;
         }
