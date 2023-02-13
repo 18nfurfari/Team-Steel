@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lobbyCodeText: {fileID: 107922556}
+  _readyButton: {fileID: 1267177456}
 --- !u!1 &107922554
 GameObject:
   m_ObjectHideFlags: 0

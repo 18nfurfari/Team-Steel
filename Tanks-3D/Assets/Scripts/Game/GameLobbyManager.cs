@@ -79,6 +79,12 @@ namespace Game
         {
             return lobbyPlayerData;
         }
+
+        public async Task<bool> SetPlayerReady()
+        {
+            localLobbyPlayerData.IsReady = true;
+            return await LobbyManager.Instance.UpdatePlayerData(localLobbyPlayerData.Id, localLobbyPlayerData.Serialize());
+        }
     }
 }
 
