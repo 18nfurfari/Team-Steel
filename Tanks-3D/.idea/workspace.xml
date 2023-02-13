@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f77e222-61d8-403d-aebf-1c3908be2af4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameMap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameMap.unity" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2LgkjAe03eCkWtJhskckIpRh4sA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f77e222-61d8-403d-aebf-1c3908be2af4" name="Default Changelist" comment="" />
+      <created>1676300247056</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676300247056</updated>
+      <workItem from="1676300249663" duration="35000" />
+      <workItem from="1676300297166" duration="209000" />
+      <workItem from="1676300669704" duration="20000" />
+      <workItem from="1676300985829" duration="13000" />
+      <workItem from="1676301031710" duration="12000" />
+      <workItem from="1676301115291" duration="108000" />
+      <workItem from="1676301408668" duration="78000" />
+      <workItem from="1676301526793" duration="38000" />
+      <workItem from="1676301589377" duration="176000" />
+      <workItem from="1676301781200" duration="5000" />
+      <workItem from="1676301890699" duration="146000" />
+      <workItem from="1676302200457" duration="215000" />
+      <workItem from="1676302597928" duration="245000" />
+      <workItem from="1676302860627" duration="13000" />
+      <workItem from="1676303873395" duration="96000" />
+      <workItem from="1676304031401" duration="7000" />
+      <workItem from="1676304131172" duration="43000" />
+      <workItem from="1676304238962" duration="91000" />
+      <workItem from="1676304368011" duration="1522000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="781" y="345" key="SettingsEditor" timestamp="1676301666796">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="781" y="345" key="SettingsEditor/-1920.92.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1676301666796" />
+  </component>
+</project>
