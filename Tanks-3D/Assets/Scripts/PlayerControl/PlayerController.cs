@@ -14,25 +14,25 @@ public class PlayerController : NetworkBehaviour
     // used to store player input
     private Vector2 _playerInput;
     private bool _fire;
-    private float _leftTrackSpeed;
-    private float _rightTrackSpeed;
+
 
     // store reference to player's character controller to be used to move
     [SerializeField] private CharacterController controller;
-    
-    //[SerializeField] private Rigidbody rb;
-    
+
     // values for player's movement speed and rotation speed
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float playerRotation = 60f;
     [SerializeField] private float turretRotation = 50f;
+    [SerializeField] private float bulletSpeed = 30f;
 
     private PlayerControlActionAsset _playerControlActionAsset;
     
     private GameObject _leftTrack;
     private GameObject _rightTrack;
-
     private GameObject _turret;
+
+    public Transform bulletSpawnPoint;
+    public GameObject bulletPrefab;
     
     private void Awake()
     {
@@ -127,7 +127,9 @@ public class PlayerController : NetworkBehaviour
         // Turret Firing
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Fire!");
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, 
+                bulletSpawnPoint.rotation * Quaternion.Euler(90,0,0));
+            bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
         }
         PlayerMovement();
     }
