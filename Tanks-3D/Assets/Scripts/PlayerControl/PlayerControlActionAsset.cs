@@ -70,7 +70,7 @@ public partial class @PlayerControlActionAsset : IInputActionCollection2, IDispo
                 {
                     ""name"": ""up"",
                     ""id"": ""340e919b-8023-4fc2-b948-e75d6884141b"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -81,7 +81,7 @@ public partial class @PlayerControlActionAsset : IInputActionCollection2, IDispo
                 {
                     ""name"": ""down"",
                     ""id"": ""bda58244-c5ec-401a-ad89-a9615c6cecb8"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -14,6 +14,8 @@ public class PlayerController : NetworkBehaviour
     // used to store player input
     private Vector2 _playerInput;
     private bool _fire;
+    private float _leftTrackSpeed;
+    private float _rightTrackSpeed;
 
     // store reference to player's character controller to be used to move
     [SerializeField] private CharacterController controller;
@@ -21,14 +23,23 @@ public class PlayerController : NetworkBehaviour
     //[SerializeField] private Rigidbody rb;
     
     // values for player's movement speed and rotation speed
-    [SerializeField] private float playerSpeed = 8f;
+    [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float playerRotation = 60f;
+    [SerializeField] private float turretRotation = 50f;
 
     private PlayerControlActionAsset _playerControlActionAsset;
+    
+    private GameObject _leftTrack;
+    private GameObject _rightTrack;
 
+    private GameObject _turret;
+    
     private void Awake()
     {
         _playerControlActionAsset = new PlayerControlActionAsset();
+        _leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
+        _rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
+        _turret = GameObject.Find("Panzer_VI_E_Turret");
     }
 
     private void OnEnable()
@@ -70,11 +81,50 @@ public class PlayerController : NetworkBehaviour
     
     private void Update()
     {
+        // Player Gravity
         if (!controller.isGrounded)
         {
             controller.Move(new Vector3(0, -1, 0));
         }
-
+        
+        // Track Movement
+        if (Input.GetKey(KeyCode.W))
+        {
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = -0.07f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = -0.07f;
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
+        }
+        else
+        {
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
+        }
+        
+        // Turret Movement
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
+        }
+        
+        // Turret Firing
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Fire!");
