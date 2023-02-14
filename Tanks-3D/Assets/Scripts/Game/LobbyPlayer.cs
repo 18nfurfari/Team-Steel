@@ -14,7 +14,8 @@ namespace Game
         public void setData(LobbyPlayerData data)
         {
             _data = data;
-            playerName.text = _data.Gamertag;
+            //playerName.text = _data.Gamertag;
+            playerName.text = "Player";
             
             if (_data.IsReady)
             {
