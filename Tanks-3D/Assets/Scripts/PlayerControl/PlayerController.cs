@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using Unity.Netcode;
 using Unity.Networking.Transport.Utilities;
 using Unity.Services.Lobbies.Models;
@@ -8,6 +9,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -33,6 +37,10 @@ public class PlayerController : NetworkBehaviour
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
+
+    private GameObject _currentAmmoObject;
+    private TextMeshProUGUI _currentAmmoText;
+    public int currentAmmo;
     
     private void Awake()
     {
@@ -40,6 +48,10 @@ public class PlayerController : NetworkBehaviour
         _leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
         _rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
         _turret = GameObject.Find("Panzer_VI_E_Turret");
+
+        _currentAmmoObject = GameObject.Find("CurrentAmmo");
+        _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
+        currentAmmo = 5;
     }
 
     private void OnEnable()
@@ -130,6 +142,16 @@ public class PlayerController : NetworkBehaviour
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, 
                 bulletSpawnPoint.rotation * Quaternion.Euler(90,0,0));
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+            if (currentAmmo <= 0)
+            {
+                currentAmmo = 5;
+            }
+            else
+            {
+                currentAmmo -= 1;
+            }
+
+            _currentAmmoText.text = currentAmmo + "/5";
         }
         PlayerMovement();
     }
