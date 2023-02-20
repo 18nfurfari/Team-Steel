@@ -37,7 +37,6 @@ namespace Game
             foreach (Dictionary<string, PlayerDataObject> data in playerData)
             {
                 LobbyPlayerData lobbyPlayerData = new LobbyPlayerData();
-    
                 lobbyPlayerData.Initialize(data);
     
                 if (lobbyPlayerData.Id == AuthenticationService.Instance.PlayerId)
@@ -55,9 +54,7 @@ namespace Game
         {
             LobbyPlayerData playerData = new LobbyPlayerData();
             playerData.Initialize(AuthenticationService.Instance.PlayerId, gamertag: "HostPlayer");
-            
             bool success = await LobbyManager.Instance.CreateLobby(4, true, playerData.Serialize());
-            
             return success;
         }
     
@@ -70,7 +67,6 @@ namespace Game
         {
             LobbyPlayerData playerData = new LobbyPlayerData();
             playerData.Initialize(AuthenticationService.Instance.PlayerId, gamertag: "JoinPlayer");
-    
             bool success = await LobbyManager.Instance.JoinLobby(code, playerData.Serialize());
             return success;
         }

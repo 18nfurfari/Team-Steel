@@ -26,7 +26,7 @@ namespace Game
         void Start()
         {
             // TODO: format lobby text correctly...
-            _lobbyCodeText.text = $"Lobby code: {GameLobbyManager.Instance.GetLobbyCode()}\n\n\n\n\n\n\n\n\n\n";
+            _lobbyCodeText.text = $"Lobby code: {GameLobbyManager.Instance.GetLobbyCode()}";
         }
 
         private async void OnReadyPressed()

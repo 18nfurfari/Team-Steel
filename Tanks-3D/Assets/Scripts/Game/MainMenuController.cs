@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,12 +30,7 @@ namespace Game
             _joinButton.onClick.RemoveListener(OnJoinClicked);
             _submitJoinCodeButton.onClick.RemoveListener(OnSubmitJoinCodeClicked);
         }
-    
-        // Update is called once per frame
-        void Update()
-        {
-        }
-    
+
         private async void OnHostClicked()
         {
             // If lobby creation success, send to lobby scene

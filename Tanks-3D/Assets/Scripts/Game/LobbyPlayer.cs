@@ -1,5 +1,7 @@
-﻿using GameFramework.Core.Data;
+﻿using System.Collections.Generic;
+using GameFramework.Core.Data;
 using TMPro;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 namespace Game
@@ -8,26 +10,57 @@ namespace Game
     {
         [SerializeField] private TextMeshProUGUI playerName;
         [SerializeField] private TextMeshProUGUI readyState;
-        
-        private LobbyPlayerData _data;
-        
-        public void setData(LobbyPlayerData data)
+
+
+        private string _id;
+        private string _gamertag;
+        private bool _isReady = false;
+        //private LobbyPlayerData _data;
+
+        public string Id => _id;
+        public string Gamertag => _gamertag;
+
+        public bool IsReady
         {
-            _data = data;
-            //playerName.text = _data.Gamertag;
-            playerName.text = "Player";
-            
-            if (_data.IsReady)
-            {
-                readyState.text = "Ready";
-            }
+            get => _isReady;
+            set => _isReady = value;
+        }
 
-            if (!_data.IsReady)
-            {
-                readyState.text = "Not Ready";
-            }
+        public void Initialize(string id, string gamertag)
+        {
+            _id = id;
+            _gamertag = gamertag;
+        }
 
-            gameObject.SetActive(true);
+        public void Initialize(Dictionary<string, PlayerDataObject> playerData)
+        {
+            UpdateState(playerData);
+        }
+
+        public void UpdateState(Dictionary<string, PlayerDataObject> playerData)
+        {
+            if (playerData.ContainsKey("Id"))
+            {
+                _id = playerData["Id"].Value;
+            }
+            if (playerData.ContainsKey("Gamertag"))
+            {
+                _gamertag = playerData["Gamertag"].Value;
+            }
+            if (playerData.ContainsKey("IsReady"))
+            {
+                _isReady = playerData["IsReady"].Value == "True";
+            }
+        }
+
+        public Dictionary<string, string> Serialize()
+        {
+            return new Dictionary<string, string>()
+            {
+                { "Id", _id },
+                { "Gamertag", _gamertag },
+                { "IsReady", _isReady.ToString() }
+            };
         }
     }
 }
