@@ -50,8 +50,7 @@ namespace Game
         private async void OnSubmitJoinCodeClicked()
         {
             string code = _joinCodeText.text;
-    
-            // must remove end of line character from join code
+            
             code = code.Substring(0, code.Length - 1);
     
             bool success = await GameLobbyManager.Instance.JoinLobby(code);

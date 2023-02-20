@@ -5,23 +5,23 @@ namespace GameFramework.Core.Data
 {
     public class LobbyPlayerData
     {
-        private string id;
-        private string gamertag;
-        private bool isReady;
+        private string _id;
+        private string _gamertag;
+        private bool _isReady;
 
-        public string Id => id;
-        public string Gamertag => gamertag;
+        public string Id => _id;
+        public string Gamertag => _gamertag;
 
         public bool IsReady
         {
-            get => isReady;
-            set => isReady = value;
+            get => _isReady;
+            set => _isReady = value;
         }
 
         public void Initialize(string id, string gamertag)
         {
-            this.id = id;
-            this.gamertag = gamertag;
+            _id = id;
+            _gamertag = gamertag;
         }
 
         public void Initialize(Dictionary<string, PlayerDataObject> playerData)
@@ -33,15 +33,15 @@ namespace GameFramework.Core.Data
         {
             if (playerData.ContainsKey("Id"))
             {
-                id = playerData["Id"].Value;
+                _id = playerData["Id"].Value;
             }
             if (playerData.ContainsKey("Gamertag"))
             {
-                gamertag = playerData["Gamertag"].Value;
+                _gamertag = playerData["Gamertag"].Value;
             }
             if (playerData.ContainsKey("IsReady"))
             {
-                isReady = playerData["IsReady"].Value == "True";
+                _isReady = playerData["IsReady"].Value == "True";
             }
         }
 
@@ -49,9 +49,9 @@ namespace GameFramework.Core.Data
         {
             return new Dictionary<string, string>()
             {
-                { "Id", id },
-                { "Gamertag", gamertag },
-                { "IsReady", isReady.ToString() }
+                { "Id", _id },
+                { "Gamertag", _gamertag },
+                { "IsReady", _isReady.ToString() }
             };
         }
     }

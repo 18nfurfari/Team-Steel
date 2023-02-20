@@ -25,7 +25,7 @@ namespace Game
             for (int x = 0; x < playerData.Count; x++)
             {
                 LobbyPlayerData data = playerData[x];
-                //players[x].Initialize(data);
+                players[x].SetData(data);
             }
         }
     }

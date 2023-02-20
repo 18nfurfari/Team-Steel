@@ -35,7 +35,6 @@ namespace GameFramework.Manager
                 Player = player
             };
             
-            // TODO: catch exceptions depending on different errors (full, incorrect code, etc.)
             try
             {
                 _lobby = await LobbyService.Instance.CreateLobbyAsync("Test Lobby Name", maxPlayers, options);
