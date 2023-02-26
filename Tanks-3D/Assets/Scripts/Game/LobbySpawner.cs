@@ -20,11 +20,11 @@ namespace Game
         
         private void OnLobbyUpdated()
         {
-            List<LobbyPlayerData> playerData = GameLobbyManager.Instance.GetPlayers();
+            List<LobbyPlayerData> playersData = GameLobbyManager.Instance.GetPlayers();
 
-            for (int x = 0; x < playerData.Count; x++)
+            for (int x = 0; x < playersData.Count; x++)
             {
-                LobbyPlayerData data = playerData[x];
+                LobbyPlayerData data = playersData[x];
                 players[x].SetData(data);
             }
         }

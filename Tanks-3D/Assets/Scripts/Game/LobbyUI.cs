@@ -15,12 +15,12 @@ namespace Game
 
         private void OnEnable()
         {
-            _readyButton.onClick.AddListener(OnReadyPressed);
+            //_readyButton.onClick.AddListener(OnReadyPressed);
         }
 
         private void OnDisable()
         {
-            _readyButton.onClick.RemoveAllListeners();
+            //_readyButton.onClick.RemoveAllListeners();
         }
 
         void Start()
