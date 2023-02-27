@@ -28,6 +28,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float playerRotation = 60f;
     [SerializeField] private float turretRotation = 50f;
     [SerializeField] private float bulletSpeed = 30f;
+    [SerializeField] private float trackSpeed = 0.10f;
 
     private PlayerControlActionAsset _playerControlActionAsset;
     
@@ -41,7 +42,9 @@ public class PlayerController : NetworkBehaviour
     private GameObject _currentAmmoObject;
     private TextMeshProUGUI _currentAmmoText;
     public int currentAmmo;
-    
+    private bool reloading;
+    private float reloadTime;
+
     private void Awake()
     {
         _playerControlActionAsset = new PlayerControlActionAsset();
@@ -51,12 +54,16 @@ public class PlayerController : NetworkBehaviour
 
         _currentAmmoObject = GameObject.Find("CurrentAmmo");
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
+
+        reloading = false;
+        reloadTime = 3.0f;
         currentAmmo = 5;
     }
 
     private void OnEnable()
     {
         _playerControlActionAsset.Enable();
+        reloadTime = Time.time;
     }
 
     private void OnDisable()
@@ -93,6 +100,11 @@ public class PlayerController : NetworkBehaviour
     
     private void Update()
     {
+        if (reloading)
+        {
+            Reload();
+        }
+        
         // Player Gravity
         if (!controller.isGrounded)
         {
@@ -102,22 +114,22 @@ public class PlayerController : NetworkBehaviour
         // Track Movement
         if (Input.GetKey(KeyCode.W))
         {
-            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
-            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = trackSpeed;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = trackSpeed;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = -0.07f;
-            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = -0.07f;
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = -trackSpeed;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = -trackSpeed;
         }
         else if (Input.GetKey(KeyCode.A))
         {
             _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
-            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+            _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = trackSpeed;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = 0.07f;
+            _leftTrack.GetComponent<Scroll_Track>().scrollSpeed = trackSpeed;
             _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
         }
         else
@@ -137,14 +149,17 @@ public class PlayerController : NetworkBehaviour
         }
         
         // Turret Firing
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !reloading)
         {
-            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, 
-                bulletSpawnPoint.rotation * Quaternion.Euler(90,0,0));
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
+                bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
             if (currentAmmo <= 0)
             {
-                currentAmmo = 5;
+                Debug.Log("Reloading!");
+                reloading = true;
+                reloadTime = 3.0f;
+
             }
             else
             {
@@ -153,6 +168,22 @@ public class PlayerController : NetworkBehaviour
 
             _currentAmmoText.text = currentAmmo + "/5";
         }
+
         PlayerMovement();
+    }
+
+    private void Reload()
+    {
+        // Wait until waitTime is below or equal to zero.
+        if (reloadTime > 0)
+        {
+            reloadTime -= Time.deltaTime;
+        }
+        else
+        {
+            reloading = false;
+            currentAmmo = 5;
+            _currentAmmoText.text = currentAmmo + "/5";
+        }
     }
 }
