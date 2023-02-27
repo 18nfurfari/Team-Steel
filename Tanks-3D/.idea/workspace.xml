@@ -20,7 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f77e222-61d8-403d-aebf-1c3908be2af4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BulletScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BulletScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerPrefab.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameMap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameMap.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameMap/NavMesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameMap/NavMesh.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyController/EnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyController/EnemyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +47,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/proj2-minic-lexer-startup" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -69,6 +77,13 @@
       <workItem from="1676304131172" duration="43000" />
       <workItem from="1676304238962" duration="91000" />
       <workItem from="1676304368011" duration="1522000" />
+      <workItem from="1676857466120" duration="823000" />
+      <workItem from="1676859474408" duration="842000" />
+      <workItem from="1676987834630" duration="49000" />
+      <workItem from="1677506414926" duration="340000" />
+      <workItem from="1677506784537" duration="2219000" />
+      <workItem from="1677514881651" duration="7891000" />
+      <workItem from="1677531444897" duration="4502000" />
     </task>
     <servers />
   </component>
@@ -88,9 +103,21 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1060" y="455" key="FileChooserDialogImpl" timestamp="1676987880127">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1060" y="455" key="FileChooserDialogImpl/-1920.92.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1676987880127" />
     <state x="781" y="345" key="SettingsEditor" timestamp="1676301666796">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="345" key="SettingsEditor/-1920.92.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1676301666796" />
+    <state x="871" y="275" key="new project wizard" timestamp="1676987849720">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="871" y="275" key="new project wizard/-1920.92.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1676987849720" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1677522702370">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-1920.92.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1677522702370" />
   </component>
 </project>
