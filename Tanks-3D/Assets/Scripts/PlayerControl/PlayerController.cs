@@ -43,7 +43,9 @@ public class PlayerController : NetworkBehaviour
     private TextMeshProUGUI _currentAmmoText;
     public int currentAmmo;
     private bool reloading;
+    private bool cooldown;
     private float reloadTime;
+    private float cooldownTime;
 
     private void Awake()
     {
@@ -56,8 +58,10 @@ public class PlayerController : NetworkBehaviour
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
 
         reloading = false;
+        cooldown = false;
         reloadTime = 3.0f;
-        currentAmmo = 5;
+        cooldownTime = 0.5f;
+        currentAmmo = 4;
     }
 
     private void OnEnable()
@@ -104,7 +108,7 @@ public class PlayerController : NetworkBehaviour
         {
             Reload();
         }
-        
+
         // Player Gravity
         if (!controller.isGrounded)
         {
@@ -149,11 +153,18 @@ public class PlayerController : NetworkBehaviour
         }
         
         // Turret Firing
-        if (Input.GetKeyDown(KeyCode.Space) && !reloading)
+        if (cooldownTime > 0)
+        {
+            cooldownTime -= Time.deltaTime;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !reloading)
         {
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
                 bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+
+            cooldownTime = 0.5f;
+            
             if (currentAmmo <= 0)
             {
                 Debug.Log("Reloading!");
@@ -181,6 +192,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            Debug.Log("Finished Reloading!");
             reloading = false;
             currentAmmo = 5;
             _currentAmmoText.text = currentAmmo + "/5";
