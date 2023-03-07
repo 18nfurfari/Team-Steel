@@ -663,7 +663,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095761116434470186}
-  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
+  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
   m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
   m_LocalScale: {x: 0.7499999, y: 0.7500001, z: 0.75000006}
   m_ConstrainProportionsScale: 0
@@ -774,6 +774,8 @@ GameObject:
   - component: {fileID: 5009905900294598967}
   - component: {fileID: 8057856276017357602}
   - component: {fileID: -4078480744844151546}
+  - component: {fileID: 1559556191872898830}
+  - component: {fileID: 8402055328705142917}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -978,6 +980,44 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 4388687617042812113}
+--- !u!114 &1559556191872898830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191251992303597032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
+--- !u!114 &8402055328705142917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191251992303597032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2316823819499745733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1127,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461326488664538145}
-  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
+  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
   m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
