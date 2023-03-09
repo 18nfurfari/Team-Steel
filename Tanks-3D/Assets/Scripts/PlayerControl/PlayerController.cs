@@ -1,17 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
 using Unity.Netcode;
-using Unity.Networking.Transport.Utilities;
-using Unity.Services.Lobbies.Models;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -47,7 +37,7 @@ public class PlayerController : NetworkBehaviour
     private float reloadTime;
     private float cooldownTime;
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
         _playerControlActionAsset = new PlayerControlActionAsset();
         _leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
@@ -165,8 +155,9 @@ public class PlayerController : NetworkBehaviour
 
             cooldownTime = 0.5f;
             
-            if (currentAmmo <= 0)
+            if (currentAmmo <= 1)
             {
+                currentAmmo--;
                 Debug.Log("Reloading!");
                 reloading = true;
                 reloadTime = 3.0f;

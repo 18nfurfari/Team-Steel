@@ -1,17 +1,30 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    // private void Update()
-    // {
-    //     if (!IsOwner)
-    //     {
-    //         PlayerInput.Destroy(this);
-    //     }
-    // }
+    [SerializeField] private Transform spawnedObjectPrefab;
+
+    private void Update()
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Transform spawnedObjectTransform = Instantiate(spawnedObjectPrefab);
+        
+            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
+        }
+
+        
+    }
 }
