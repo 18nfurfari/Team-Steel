@@ -25,12 +25,15 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private float turretRotation = 50f;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float trackSpeed = 0.10f;
+    [SerializeField] private GameObject _turret;
+    [SerializeField] private GameObject _leftTrack;
+    [SerializeField] private GameObject _rightTrack;
 
     // private PlayerControlActionAsset _playerControlActionAsset;
     
-    private GameObject _leftTrack;
-    private GameObject _rightTrack;
-    private GameObject _turret;
+    // private GameObject _leftTrack;
+    // private GameObject _rightTrack;
+    //private GameObject _turret;
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
@@ -45,9 +48,9 @@ public class PlayerNetwork : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
-        _rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
-        _turret = GameObject.Find("Panzer_VI_E_Turret");
+        //_leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
+        //_rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
+        //_turret = GameObject.Find("Panzer_VI_E_Turret");
 
         _currentAmmoObject = GameObject.Find("CurrentAmmo");
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
@@ -136,6 +139,12 @@ public class PlayerNetwork : NetworkBehaviour
             }
         
             _currentAmmoText.text = currentAmmo + "/5";
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Transform spawnedObjectTransform = Instantiate(spawnedObjectPrefab);
+            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
         }
     }
 

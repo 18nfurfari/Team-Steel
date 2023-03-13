@@ -929,12 +929,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedObjectPrefab: {fileID: 6667764887131506932, guid: 66995fb88c97aa849a4c1c3e1914a5bc, type: 3}
-  controller: {fileID: -7192642903883684930}
-  playerSpeed: 10
-  playerRotation: 60
   turretRotation: 50
   bulletSpeed: 30
   trackSpeed: 0.1
+  _turret: {fileID: 2316823819499745733}
+  _leftTrack: {fileID: 8275613508059411736}
+  _rightTrack: {fileID: 720771576792738100}
   bulletSpawnPoint: {fileID: 3474281150892889699}
   bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
   currentAmmo: 0
@@ -953,12 +953,6 @@ MonoBehaviour:
   controller: {fileID: -7192642903883684930}
   playerSpeed: 10
   playerRotation: 60
-  turretRotation: 50
-  bulletSpeed: 30
-  trackSpeed: 0.1
-  bulletSpawnPoint: {fileID: 3474281150892889699}
-  bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
-  currentAmmo: 0
   cameraMove: {fileID: 0}
 --- !u!114 &-4078480744844151546
 MonoBehaviour:
@@ -1005,12 +999,12 @@ MonoBehaviour:
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 1
-  SyncRotAngleX: 1
+  SyncRotAngleX: 0
   SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
