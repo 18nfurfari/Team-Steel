@@ -663,13 +663,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095761116434470186}
-  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
-  m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
-  m_LocalScale: {x: 0.7499999, y: 0.7500001, z: 0.75000006}
+  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
+  m_LocalPosition: {x: -0.020000936, y: 3.198059, z: -9.037248}
+  m_LocalScale: {x: 0.7499998, y: 0.7500002, z: 0.75000006}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2896867665593862139}
-  m_RootOrder: 3
+  m_Father: {fileID: 5579813169647829867}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &4388687617042812113
 Camera:
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 8057856276017357602}
   - component: {fileID: -4078480744844151546}
   - component: {fileID: 5142092257343538818}
-  - component: {fileID: 1537792609595992883}
+  - component: {fileID: 2417255823729914591}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -798,7 +798,6 @@ Transform:
   - {fileID: 3012036172799571350}
   - {fileID: 7018672247087385861}
   - {fileID: 5579813169647829867}
-  - {fileID: 2594039055907775155}
   - {fileID: 2162238846602380491}
   - {fileID: 3141410914137294708}
   m_Father: {fileID: 0}
@@ -930,7 +929,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedObjectPrefab: {fileID: 6667764887131506932, guid: 66995fb88c97aa849a4c1c3e1914a5bc, type: 3}
+  controller: {fileID: -7192642903883684930}
+  playerSpeed: 10
+  playerRotation: 60
   turretRotation: 50
+  bulletSpeed: 30
+  trackSpeed: 0.1
+  bulletSpawnPoint: {fileID: 3474281150892889699}
+  bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
+  currentAmmo: 0
 --- !u!114 &8057856276017357602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,10 +951,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: -7192642903883684930}
-  playerSpeed: 8
+  playerSpeed: 10
   playerRotation: 60
   turretRotation: 50
-  bulletSpeed: 20
+  bulletSpeed: 30
   trackSpeed: 0.1
   bulletSpawnPoint: {fileID: 3474281150892889699}
   bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
@@ -1009,7 +1016,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!114 &1537792609595992883
+--- !u!114 &2417255823729914591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1053,6 +1060,7 @@ Transform:
   m_Children:
   - {fileID: 1336145784037996353}
   - {fileID: 3474281150892889699}
+  - {fileID: 2594039055907775155}
   m_Father: {fileID: 2896867665593862139}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1130,14 +1138,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461326488664538145}
-  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
+  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
   m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2806358345258786106}
   m_Father: {fileID: 2896867665593862139}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &187858810506278417
 MonoBehaviour:
@@ -1636,7 +1644,7 @@ RectTransform:
   - {fileID: 5535896593980242438}
   - {fileID: 2498264361255327873}
   m_Father: {fileID: 2896867665593862139}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

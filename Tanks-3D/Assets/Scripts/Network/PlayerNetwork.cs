@@ -13,20 +13,20 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private Transform spawnedObjectPrefab;
     
     // used to store player input
-    private Vector2 _playerInput;
+    // private Vector2 _playerInput;
     private bool _fire;
     
     // store reference to player's character controller to be used to move
-    [SerializeField] private CharacterController controller;
+    // [SerializeField] private CharacterController controller;
 
     // values for player's movement speed and rotation speed
-    [SerializeField] private float playerSpeed = 10f;
-    [SerializeField] private float playerRotation = 60f;
+    // [SerializeField] private float playerSpeed = 10f;
+    // [SerializeField] private float playerRotation = 60f;
     [SerializeField] private float turretRotation = 50f;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float trackSpeed = 0.10f;
 
-    private PlayerControlActionAsset _playerControlActionAsset;
+    // private PlayerControlActionAsset _playerControlActionAsset;
     
     private GameObject _leftTrack;
     private GameObject _rightTrack;
@@ -45,7 +45,6 @@ public class PlayerNetwork : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _playerControlActionAsset = new PlayerControlActionAsset();
         _leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
         _rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
         _turret = GameObject.Find("Panzer_VI_E_Turret");
@@ -57,8 +56,9 @@ public class PlayerNetwork : NetworkBehaviour
         cooldown = false;
         reloadTime = 3.0f;
         cooldownTime = 0.5f;
-        currentAmmo = 4;
+        currentAmmo = 5;
     }
+
     private void Update()
     {
         if (!IsOwner)
@@ -66,22 +66,6 @@ public class PlayerNetwork : NetworkBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Transform spawnedObjectTransform = Instantiate(spawnedObjectPrefab);
-        
-            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
-        }
-        // Turret Movement
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
-        }
-        
         // Track Movement
         if (Input.GetKey(KeyCode.W))
         {
@@ -109,7 +93,17 @@ public class PlayerNetwork : NetworkBehaviour
             _rightTrack.GetComponent<Scroll_Track>().scrollSpeed = 0f;
         }
         
-        // Check for reload
+        // Turret Movement
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
+        }
+        
+        // // Check for reload
         if (reloading)
         {
             Reload();
@@ -144,7 +138,7 @@ public class PlayerNetwork : NetworkBehaviour
             _currentAmmoText.text = currentAmmo + "/5";
         }
     }
-    
+
     private void Reload()
     {
         // Wait until waitTime is below or equal to zero.
