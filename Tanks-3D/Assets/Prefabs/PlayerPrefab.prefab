@@ -663,7 +663,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095761116434470186}
-  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
+  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
   m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
   m_LocalScale: {x: 0.7499999, y: 0.7500001, z: 0.75000006}
   m_ConstrainProportionsScale: 0
@@ -930,6 +930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedObjectPrefab: {fileID: 6667764887131506932, guid: 66995fb88c97aa849a4c1c3e1914a5bc, type: 3}
+  turretRotation: 50
 --- !u!114 &8057856276017357602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -951,6 +952,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 3474281150892889699}
   bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
   currentAmmo: 0
+  cameraMove: {fileID: 0}
 --- !u!114 &-4078480744844151546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,7 +1130,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461326488664538145}
-  m_LocalRotation: {x: 0.13404848, y: 0.0009692777, z: -0.00013111363, w: 0.9909743}
+  m_LocalRotation: {x: 0.13404845, y: 0.0009693109, z: -0.00013111808, w: 0.9909743}
   m_LocalPosition: {x: -0.019999979, y: 4.9699993, z: -9.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

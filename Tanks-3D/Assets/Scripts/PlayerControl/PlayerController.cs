@@ -8,8 +8,7 @@ public class PlayerController : NetworkBehaviour
     // used to store player input
     private Vector2 _playerInput;
     private bool _fire;
-
-
+    
     // store reference to player's character controller to be used to move
     [SerializeField] private CharacterController controller;
 
@@ -36,6 +35,8 @@ public class PlayerController : NetworkBehaviour
     private bool cooldown;
     private float reloadTime;
     private float cooldownTime;
+
+    [SerializeField] private InputActionReference cameraMove;
 
     public override void OnNetworkSpawn()
     {
@@ -71,7 +72,7 @@ public class PlayerController : NetworkBehaviour
         _playerInput = value.Get<Vector2>();
         
     }
-
+    
     // private void OnFire(InputValue value)
     // {
     //     FireInput(value.isPressed);
@@ -94,11 +95,6 @@ public class PlayerController : NetworkBehaviour
     
     private void Update()
     {
-        if (reloading)
-        {
-            Reload();
-        }
-
         // Player Gravity
         if (!controller.isGrounded)
         {
@@ -142,6 +138,12 @@ public class PlayerController : NetworkBehaviour
             _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
         }
         
+        // // Check for reload
+        if (reloading)
+        {
+            Reload();
+        }
+        
         // Turret Firing
         if (cooldownTime > 0)
         {
@@ -152,7 +154,7 @@ public class PlayerController : NetworkBehaviour
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
                 bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-
+        
             cooldownTime = 0.5f;
             
             if (currentAmmo <= 1)
@@ -161,19 +163,19 @@ public class PlayerController : NetworkBehaviour
                 Debug.Log("Reloading!");
                 reloading = true;
                 reloadTime = 3.0f;
-
+        
             }
             else
             {
                 currentAmmo -= 1;
             }
-
+        
             _currentAmmoText.text = currentAmmo + "/5";
         }
-
         PlayerMovement();
     }
 
+    // Function to wait set amount of time before letting player fire again
     private void Reload()
     {
         // Wait until waitTime is below or equal to zero.
