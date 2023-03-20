@@ -30,10 +30,6 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject _rightTrack;
 
     // private PlayerControlActionAsset _playerControlActionAsset;
-    
-    // private GameObject _leftTrack;
-    // private GameObject _rightTrack;
-    //private GameObject _turret;
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
@@ -42,7 +38,6 @@ public class PlayerNetwork : NetworkBehaviour
     private TextMeshProUGUI _currentAmmoText;
     public int currentAmmo;
     private bool reloading;
-    private bool cooldown;
     private float reloadTime;
     private float cooldownTime;
 
@@ -56,7 +51,6 @@ public class PlayerNetwork : NetworkBehaviour
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
 
         reloading = false;
-        cooldown = false;
         reloadTime = 3.0f;
         cooldownTime = 0.5f;
         currentAmmo = 5;

@@ -32,7 +32,6 @@ public class PlayerController : NetworkBehaviour
     // private TextMeshProUGUI _currentAmmoText;
     // public int currentAmmo;
     // private bool reloading;
-    // private bool cooldown;
     // private float reloadTime;
     // private float cooldownTime;
 
@@ -49,7 +48,6 @@ public class PlayerController : NetworkBehaviour
         // _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
 
         // reloading = false;
-        // cooldown = false;
         // reloadTime = 3.0f;
         // cooldownTime = 0.5f;
         // currentAmmo = 4;
