@@ -122,9 +122,11 @@ public class PlayerNetwork : NetworkBehaviour
             //     bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
             // bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
-            Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
-            bulletTransform.GetComponent<NetworkObject>().Spawn(true);
-            bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+            // Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
+            // bulletTransform.GetComponent<NetworkObject>().Spawn(true);
+            // bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+            
+            ShootServerRpc();
 
             cooldownTime = 0.5f;
             
@@ -169,5 +171,13 @@ public class PlayerNetwork : NetworkBehaviour
             currentAmmo = 5;
             _currentAmmoText.text = currentAmmo + "/5";
         }
+    }
+    
+    [ServerRpc]
+    private void ShootServerRpc()
+    {
+        Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
+        bulletTransform.GetComponent<NetworkObject>().Spawn(true);
+        bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 }
