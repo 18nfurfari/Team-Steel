@@ -6,11 +6,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
+using Quaternion = System.Numerics.Quaternion;
 using Random = UnityEngine.Random;
 
 public class PlayerNetwork : NetworkBehaviour
 {
     [SerializeField] private Transform spawnedObjectPrefab;
+    [SerializeField] private Transform bulletPrefab;
+    [SerializeField] private Transform bulletSpawnPoint;
     
     // used to store player input
     // private Vector2 _playerInput;
@@ -34,8 +37,8 @@ public class PlayerNetwork : NetworkBehaviour
 
     // private PlayerControlActionAsset _playerControlActionAsset;
 
-    public Transform bulletSpawnPoint;
-    public GameObject bulletPrefab;
+    // public Transform bulletSpawnPoint;
+    //public GameObject bulletPrefab;
 
     [SerializeField] private GameObject _currentAmmoObject;
     private TextMeshProUGUI _currentAmmoText;
@@ -113,16 +116,16 @@ public class PlayerNetwork : NetworkBehaviour
         }
         
         // Turret Firing
-        if (cooldownTime > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && !reloading)
         {
-            cooldownTime -= Time.deltaTime;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && !reloading)
-        {
-            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
-                bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
-            bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-        
+            // var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
+            //     bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
+            // bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+
+            Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
+            bulletTransform.GetComponent<NetworkObject>().Spawn(true);
+            bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+
             cooldownTime = 0.5f;
             
             if (currentAmmo <= 1)
@@ -139,6 +142,10 @@ public class PlayerNetwork : NetworkBehaviour
             }
         
             _currentAmmoText.text = currentAmmo + "/5";
+        }
+        else if (cooldownTime > 0)
+        {
+            cooldownTime -= Time.deltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.T))
