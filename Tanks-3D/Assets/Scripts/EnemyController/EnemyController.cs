@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = PlayerManager.instance.player.transform;
+        target = GameObject.Find("PlayerPrefab").transform;
         agent = GetComponent<NavMeshAgent>();
 
         reloading = false;
