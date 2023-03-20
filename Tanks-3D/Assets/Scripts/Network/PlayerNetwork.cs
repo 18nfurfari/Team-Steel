@@ -28,13 +28,16 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject _turret;
     [SerializeField] private GameObject _leftTrack;
     [SerializeField] private GameObject _rightTrack;
+    [SerializeField] private GameObject playerCam;
+    [SerializeField] private GameObject playHUD;
+    [SerializeField] private GameObject camSocket;
 
     // private PlayerControlActionAsset _playerControlActionAsset;
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
 
-    private GameObject _currentAmmoObject;
+    [SerializeField] private GameObject _currentAmmoObject;
     private TextMeshProUGUI _currentAmmoText;
     public int currentAmmo;
     private bool reloading;
@@ -47,7 +50,7 @@ public class PlayerNetwork : NetworkBehaviour
         //_rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
         //_turret = GameObject.Find("Panzer_VI_E_Turret");
 
-        _currentAmmoObject = GameObject.Find("CurrentAmmo");
+        //_currentAmmoObject = GameObject.Find("CurrentAmmo");
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
 
         reloading = false;
@@ -60,6 +63,9 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (!IsOwner)
         {
+            playerCam.SetActive(false);
+            playHUD.SetActive(false);
+            camSocket.SetActive(false);
             return;
         }
 

@@ -935,8 +935,12 @@ MonoBehaviour:
   _turret: {fileID: 2316823819499745733}
   _leftTrack: {fileID: 8275613508059411736}
   _rightTrack: {fileID: 720771576792738100}
+  playerCam: {fileID: 2095761116434470186}
+  playHUD: {fileID: 7795180638586537906}
+  camSocket: {fileID: 2461326488664538145}
   bulletSpawnPoint: {fileID: 3474281150892889699}
   bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
+  _currentAmmoObject: {fileID: 736674228714210724}
   currentAmmo: 0
 --- !u!114 &8057856276017357602
 MonoBehaviour:
