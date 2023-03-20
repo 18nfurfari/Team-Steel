@@ -102,11 +102,11 @@ public class PlayerNetwork : NetworkBehaviour
         // Turret Movement
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
+            TurretRotateLeftServerRpc();
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
+            TurretRotateRightServerRpc();
         }
         
         // // Check for reload
@@ -179,5 +179,17 @@ public class PlayerNetwork : NetworkBehaviour
         Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
         bulletTransform.GetComponent<NetworkObject>().Spawn(true);
         bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+
+    [ServerRpc]
+    private void TurretRotateLeftServerRpc()
+    {
+        _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
+    }
+    
+    [ServerRpc]
+    private void TurretRotateRightServerRpc()
+    {
+        _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
     }
 }
