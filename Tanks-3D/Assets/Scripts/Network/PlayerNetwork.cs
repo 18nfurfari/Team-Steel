@@ -102,11 +102,13 @@ public class PlayerNetwork : NetworkBehaviour
         // Turret Movement
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            TurretRotateLeftServerRpc();
+            float rotation = -1 * turretRotation * Time.deltaTime;
+            TurretUpdateServerRpc(rotation);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            TurretRotateRightServerRpc();
+            float rotation = turretRotation * Time.deltaTime;
+            TurretUpdateServerRpc(rotation);
         }
         
         // // Check for reload
@@ -182,20 +184,8 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void TurretRotateLeftServerRpc()
+    private void TurretUpdateServerRpc(float rotation)
     {
-        float rotation = -1 * turretRotation * Time.deltaTime;
-        //_turret.transform.Rotate(transform.up, rotation);
-
-        TurretUpdateClientRpc(rotation);
-    }
-    
-    [ServerRpc]
-    private void TurretRotateRightServerRpc()
-    {
-        float rotation = turretRotation * Time.deltaTime;
-        //_turret.transform.Rotate(transform.up, rotation);
-
         TurretUpdateClientRpc(rotation);
     }
 
