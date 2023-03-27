@@ -102,11 +102,11 @@ public class PlayerNetwork : NetworkBehaviour
         // Turret Movement
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            TurretRotateLeftServerRpc(IsHost);
+            TurretRotateLeftServerRpc();
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            TurretRotateRightServerRpc(IsHost);
+            TurretRotateRightServerRpc();
         }
         
         // // Check for reload
@@ -182,30 +182,26 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void TurretRotateLeftServerRpc(bool client)
+    private void TurretRotateLeftServerRpc()
     {
-        //_turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
+        float rotation = -1 * turretRotation * Time.deltaTime;
+        //_turret.transform.Rotate(transform.up, rotation);
 
-        TurretRotateLeftClientRpc();
+        TurretUpdateClientRpc(rotation);
     }
     
     [ServerRpc]
-    private void TurretRotateRightServerRpc(bool client)
+    private void TurretRotateRightServerRpc()
     {
-        //_turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
+        float rotation = turretRotation * Time.deltaTime;
+        //_turret.transform.Rotate(transform.up, rotation);
 
-        TurretRotateRightClientRpc();
+        TurretUpdateClientRpc(rotation);
     }
 
     [ClientRpc]
-    private void TurretRotateLeftClientRpc()
+    private void TurretUpdateClientRpc(float rotation)
     {
-        _turret.transform.Rotate(transform.up, -1 * turretRotation * Time.deltaTime);
-    }
-    
-    [ClientRpc]
-    private void TurretRotateRightClientRpc()
-    {
-        _turret.transform.Rotate(transform.up, turretRotation * Time.deltaTime);
+        _turret.transform.Rotate(transform.up, rotation);
     }
 }
