@@ -9,12 +9,21 @@ public class BulletScript : MonoBehaviour
 
     private void Awake()
     {
-        //Destroy(gameObject, travelTime);
+        //Destroy bullet after travel time
+        Destroy(gameObject, travelTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
-        //Destroy(gameObject);
+        // Destroy collided object
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+        }
+        //Destroy(collision.gameObject);
+        
+        // Destroy bullet
+        Destroy(gameObject);
+        
     }
 }
