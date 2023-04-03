@@ -1706,7 +1706,7 @@ GameObject:
   - component: {fileID: 63527304}
   m_Layer: 0
   m_Name: weapon_big (4)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -33062,7 +33062,7 @@ GameObject:
   - component: {fileID: 1281419433}
   m_Layer: 0
   m_Name: weapon_big (3)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -35001,7 +35001,7 @@ GameObject:
   - component: {fileID: 1364097420}
   m_Layer: 0
   m_Name: weapon_big (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -57952,7 +57952,7 @@ GameObject:
   - component: {fileID: 2074184267}
   m_Layer: 0
   m_Name: weapon_big (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
