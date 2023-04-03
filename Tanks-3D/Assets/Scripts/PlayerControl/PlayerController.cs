@@ -93,6 +93,10 @@ public class PlayerController : NetworkBehaviour
     
     private void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         // Player Gravity
         if (!controller.isGrounded)
         {
