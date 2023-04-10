@@ -7,7 +7,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
-public class LobbyManager : MonoBehaviour {
+public class LobbyManager: MonoBehaviour {
 
 
     public static LobbyManager Instance { get; private set; }
@@ -16,6 +16,7 @@ public class LobbyManager : MonoBehaviour {
     public const string KEY_PLAYER_NAME = "PlayerName";
     public const string KEY_PLAYER_CHARACTER = "Character";
     public const string KEY_GAME_MODE = "GameMode";
+    public const string KEY_START_GAME = "StartGame";
 
 
 
@@ -30,6 +31,7 @@ public class LobbyManager : MonoBehaviour {
     }
 
     public event EventHandler<OnLobbyListChangedEventArgs> OnLobbyListChanged;
+    public event EventHandler<EventArgs> OnGameStarted; 
     public class OnLobbyListChangedEventArgs : EventArgs {
         public List<Lobby> lobbyList;
     }
@@ -125,6 +127,18 @@ public class LobbyManager : MonoBehaviour {
 
                     joinedLobby = null;
                 }
+
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                {
+                    if (!IsLobbyHost())
+                    {
+                        RelayManager.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                    }
+
+                    joinedLobby = null;
+
+                    OnGameStarted?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
@@ -180,7 +194,8 @@ public class LobbyManager : MonoBehaviour {
             Player = player,
             IsPrivate = isPrivate,
             Data = new Dictionary<string, DataObject> {
-                { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
+                { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) },
+                { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, "0")}
             }
         };
 
@@ -350,4 +365,30 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
+    public async void StartGame()
+    {
+        if (IsLobbyHost())
+        {
+            try
+            {
+                Debug.Log("Start Game");
+
+                string relayCode = await RelayManager.Instance.CreateRelay();
+
+                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>
+                    {
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
+                    }
+                });
+
+                joinedLobby = lobby;
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
 }
