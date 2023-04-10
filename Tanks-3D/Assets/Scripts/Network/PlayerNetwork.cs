@@ -14,8 +14,9 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private Transform spawnedObjectPrefab;
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform bulletSpawnPoint;
-    
-    // used to store player input
+    [SerializeField] private GameObject enemyPrefab;
+
+// used to store player input
     // private Vector2 _playerInput;
     private bool _fire;
     
@@ -65,6 +66,7 @@ public class PlayerNetwork : NetworkBehaviour
         cooldownTime = 0.5f;
         currentAmmo = 5;
         playerHealth = 5.0f;
+        SetSpawnPoints();
     }
 
     private void Update()
@@ -215,4 +217,42 @@ public class PlayerNetwork : NetworkBehaviour
             Destroy(gameObject);
         }
     }
+    
+    // Spawn point list 
+    // Vector3(-22.3999996, 0, -100.900002)
+    // Vector3(-51.2999992,0,90.3000031)
+    // Vector3(48.9000015,0,78.8000031)
+    // Vector3(91.3000031,0,-97.6999969)
+
+    void SetSpawnPoints()
+     {
+         // Get an array of all GameObjects tagged as spawn points
+         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+    
+         // Shuffle the spawn points
+         ShuffleArray(spawnPoints);
+    
+         // Get the max number of players
+         int maxPlayers = 4;
+    
+         // Set the spawn points for each player
+         for (int i = 0; i < maxPlayers; i++)
+         {
+             // Get the player object
+             GameObject player = GameObject.FindGameObjectWithTag("Player");
+    
+             // Set the spawn point for the player
+             player.transform.position = spawnPoints[i].transform.position;
+         }
+     }
+    
+     void ShuffleArray<T>(T[] array)
+     {
+         // Fisher-Yates shuffle algorithm
+         for (int i = array.Length - 1; i > 0; i--)
+         {
+             int j = UnityEngine.Random.Range(0, i + 1);
+             (array[i], array[j]) = (array[j], array[i]);
+         }
+     }
 }

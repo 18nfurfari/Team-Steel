@@ -389,6 +389,8 @@ public class LobbyManager: MonoBehaviour
                 });
     
                 joinedLobby = lobby;
+
+                heartbeatTimer = 1000f;
                 
                 lobbyCanvas.SetActive(false);
             }

@@ -16,7 +16,11 @@ public class EnemyNetwork : NetworkBehaviour
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float shootingRange = 10f;
 
-    private Transform _playerTransform;
+
+    private GameObject[] spawnPoints;
+    private Vector3 spawners;
+
+private Transform _playerTransform;
 
     public override void OnNetworkSpawn()
     {

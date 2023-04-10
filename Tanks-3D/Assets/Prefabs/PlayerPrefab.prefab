@@ -931,6 +931,7 @@ MonoBehaviour:
   spawnedObjectPrefab: {fileID: 6667764887131506932, guid: 66995fb88c97aa849a4c1c3e1914a5bc, type: 3}
   bulletPrefab: {fileID: 8879107955535928596, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
   bulletSpawnPoint: {fileID: 3474281150892889699}
+  enemyPrefab: {fileID: 7091221560422413725, guid: e1bfcff40a119f8408a81c8cb92e7747, type: 3}
   turretRotation: 50
   bulletSpeed: 30
   trackSpeed: 0.1
