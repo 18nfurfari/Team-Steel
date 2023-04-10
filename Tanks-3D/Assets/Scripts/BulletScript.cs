@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float travelTime = 3;
+    public float travelTime = 3.0f;
+    public float damage = 1.0f;
 
     private void Awake()
     {
@@ -15,13 +16,17 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Destroy collided object
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Player"))
         {
+            // Deduct player health with damage value
+            collision.gameObject.GetComponent<PlayerNetwork>().TakeDamage(damage);
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Destroy enemy in 1 hit
             Destroy(collision.gameObject);
         }
-        //Destroy(collision.gameObject);
-        
+
         // Destroy bullet
         Destroy(gameObject);
         

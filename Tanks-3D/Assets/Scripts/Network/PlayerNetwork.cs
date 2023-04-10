@@ -40,6 +40,8 @@ public class PlayerNetwork : NetworkBehaviour
     // public Transform bulletSpawnPoint;
     //public GameObject bulletPrefab;
 
+    public float playerHealth;
+
     [SerializeField] private GameObject _currentAmmoObject;
     private TextMeshProUGUI _currentAmmoText;
     public int currentAmmo;
@@ -60,6 +62,7 @@ public class PlayerNetwork : NetworkBehaviour
         reloadTime = 3.0f;
         cooldownTime = 0.5f;
         currentAmmo = 5;
+        playerHealth = 3.0f;
     }
 
     private void Update()
@@ -193,5 +196,15 @@ public class PlayerNetwork : NetworkBehaviour
     private void TurretUpdateClientRpc(float rotation)
     {
         _turret.transform.Rotate(transform.up, rotation);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        playerHealth -= damage;
+        if (playerHealth <= 0)
+        {
+            // Player is dead
+            Destroy(gameObject);
+        }
     }
 }
