@@ -25,7 +25,7 @@ public class PlayerNetwork : NetworkBehaviour
     // values for player's movement speed and rotation speed
     // [SerializeField] private float playerSpeed = 10f;
     // [SerializeField] private float playerRotation = 60f;
-    [SerializeField] private float turretRotation = 50f;
+    [SerializeField] private float turretRotation = 60f;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float trackSpeed = 0.10f;
     [SerializeField] private GameObject _turret;
@@ -49,6 +49,8 @@ public class PlayerNetwork : NetworkBehaviour
     private float reloadTime;
     private float cooldownTime;
 
+    [SerializeField] private GameObject _blackSmoke;
+
     public override void OnNetworkSpawn()
     {
         //_leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
@@ -62,7 +64,7 @@ public class PlayerNetwork : NetworkBehaviour
         reloadTime = 3.0f;
         cooldownTime = 0.5f;
         currentAmmo = 5;
-        playerHealth = 3.0f;
+        playerHealth = 5.0f;
     }
 
     private void Update()
@@ -72,6 +74,7 @@ public class PlayerNetwork : NetworkBehaviour
             playerCam.SetActive(false);
             playHUD.SetActive(false);
             camSocket.SetActive(false);
+            _blackSmoke.SetActive(false);
             return;
         }
 
@@ -201,7 +204,12 @@ public class PlayerNetwork : NetworkBehaviour
     public void TakeDamage(float damage)
     {
         playerHealth -= damage;
-        if (playerHealth <= 0)
+
+        if (playerHealth <= 1.0f && playerHealth > 0) // if player is 1 shot from death
+        {
+            _blackSmoke.SetActive(true);
+        }
+        else if (playerHealth <= 0) // player health hits 0 and dies
         {
             // Player is dead
             Destroy(gameObject);

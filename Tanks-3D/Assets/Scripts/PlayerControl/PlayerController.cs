@@ -84,8 +84,17 @@ public class PlayerController : NetworkBehaviour
     private void PlayerMovement()
     {
         // playerInput.y only allows forward and backward movement
-        controller.Move(transform.forward * (_playerInput.y * playerSpeed * Time.deltaTime));
-    
+        // moving backwards is slower
+        if (_playerInput.y < 0)
+        {
+            controller.Move(transform.forward * (_playerInput.y * (playerSpeed * 0.5f) * Time.deltaTime));
+        }
+        else
+        {
+            controller.Move(transform.forward * (_playerInput.y * playerSpeed * Time.deltaTime));
+        }
+
+
         // playerInput.x only allows player side to side rotation
         transform.Rotate(transform.up, playerRotation * _playerInput.x * Time.deltaTime);
     }
