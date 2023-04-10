@@ -14,7 +14,7 @@ public class PlayerController : NetworkBehaviour
 
     // values for player's movement speed and rotation speed
     [SerializeField] private float playerSpeed = 10f;
-    [SerializeField] private float playerRotation = 60f;
+    [SerializeField] private float playerRotation = 50f;
     // [SerializeField] private float turretRotation = 50f;
     // [SerializeField] private float bulletSpeed = 30f;
     // [SerializeField] private float trackSpeed = 0.10f;
