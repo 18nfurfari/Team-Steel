@@ -7,7 +7,10 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
-public class LobbyManager: MonoBehaviour {
+public class LobbyManager: MonoBehaviour
+{
+
+    [SerializeField] private GameObject lobbyCanvas;
 
 
     public static LobbyManager Instance { get; private set; }
@@ -138,6 +141,8 @@ public class LobbyManager: MonoBehaviour {
                     joinedLobby = null;
 
                     OnGameStarted?.Invoke(this, EventArgs.Empty);
+                    
+                    lobbyCanvas.SetActive(false);
                 }
             }
         }
@@ -347,23 +352,23 @@ public class LobbyManager: MonoBehaviour {
         }
     }
 
-    public async void UpdateLobbyGameMode(GameMode gameMode) {
-        try {
-            Debug.Log("UpdateLobbyGameMode " + gameMode);
-            
-            Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions {
-                Data = new Dictionary<string, DataObject> {
-                    { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
-                }
-            });
-
-            joinedLobby = lobby;
-
-            OnLobbyGameModeChanged?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-        } catch (LobbyServiceException e) {
-            Debug.Log(e);
-        }
-    }
+    // public async void UpdateLobbyGameMode(GameMode gameMode) {
+    //     try {
+    //         Debug.Log("UpdateLobbyGameMode " + gameMode);
+    //         
+    //         Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions {
+    //             Data = new Dictionary<string, DataObject> {
+    //                 { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
+    //             }
+    //         });
+    //
+    //         joinedLobby = lobby;
+    //
+    //         OnLobbyGameModeChanged?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+    //     } catch (LobbyServiceException e) {
+    //         Debug.Log(e);
+    //     }
+    // }
 
     public async void StartGame()
     {
@@ -384,6 +389,8 @@ public class LobbyManager: MonoBehaviour {
                 });
 
                 joinedLobby = lobby;
+                
+                lobbyCanvas.SetActive(false);
             }
             catch (LobbyServiceException e)
             {
