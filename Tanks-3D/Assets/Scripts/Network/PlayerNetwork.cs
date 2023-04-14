@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
@@ -51,6 +53,7 @@ public class PlayerNetwork : NetworkBehaviour
     private float cooldownTime;
 
     [SerializeField] private GameObject _blackSmoke;
+    
 
     public override void OnNetworkSpawn()
     {
@@ -66,7 +69,10 @@ public class PlayerNetwork : NetworkBehaviour
         cooldownTime = 0.5f;
         currentAmmo = 5;
         playerHealth = 5.0f;
-        SetSpawnPoints();
+        //SetSpawnPoints();
+        
+        StartCoroutine(SpawnPlayers());
+        
     }
 
     private void Update()
@@ -202,19 +208,40 @@ public class PlayerNetwork : NetworkBehaviour
     {
         _turret.transform.Rotate(transform.up, rotation);
     }
-
+    
+    // [ServerRpc]
+    // private void BlackSmokeVisibleServerRpc(bool visible)
+    // {
+    //     BlackSmokeVisibleClientRpc(visible);
+    // }
+    //
+    // [ClientRpc]
+    // private void BlackSmokeVisibleClientRpc(bool visible)
+    // {
+    //     _blackSmoke.SetActive(visible);
+    // }
+    
     public void TakeDamage(float damage)
     {
         playerHealth -= damage;
 
         if (playerHealth <= 1.0f && playerHealth > 0) // if player is 1 shot from death
         {
-            _blackSmoke.SetActive(true);
+            // if (IsOwner)
+            // {
+            //     BlackSmokeVisibleServerRpc(true);
+            // }
+            // _blackSmoke.SetActive(true);
         }
         else if (playerHealth <= 0) // player health hits 0 and dies
         {
             // Player is dead
             Destroy(gameObject);
+            // if (IsOwner)
+            // {
+            //     BlackSmokeVisibleServerRpc(false);
+            // }
+            // _blackSmoke.SetActive(false);
         }
     }
     
@@ -224,29 +251,51 @@ public class PlayerNetwork : NetworkBehaviour
     // Vector3(48.9000015,0,78.8000031)
     // Vector3(91.3000031,0,-97.6999969)
 
-    void SetSpawnPoints()
-     {
-         // Get an array of all GameObjects tagged as spawn points
-         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("PlayerSpawn");
-    
-         // Shuffle the spawn points
-         ShuffleArray(spawnPoints);
-    
-         // Get the max number of players
-         int maxPlayers = 4;
-    
-         // Set the spawn points for each player
-         for (int i = 0; i < maxPlayers; i++)
-         {
-             // Get the player object
-             GameObject player = GameObject.FindGameObjectWithTag("Player");
-    
-             // Set the spawn point for the player
-             player.transform.position = spawnPoints[i].transform.position;
-         }
-     }
-    
-     void ShuffleArray<T>(T[] array)
+    public int nextSpawnPointIndex = 0;
+    IEnumerator SpawnPlayers()
+    {
+        // Wait until all players are loaded
+        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
+
+        // Get an array of all GameObjects tagged as "Player"
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Get an array of all GameObjects tagged as "PlayerSpawn"
+        GameObject[] spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+        Transform[] spawnPoints = new Transform[spawnPointsObjects.Length];
+
+        for (int i = 0; i < spawnPointsObjects.Length; i++)
+        {
+            spawnPoints[i] = spawnPointsObjects[i].transform;
+        }
+        
+        // Shuffle the spawn points
+        // ShuffleArray(spawnPoints);
+
+        // Get the max number of players between 1 and 4
+        int maxPlayers = Mathf.Clamp(players.Length, 1, 4);
+        
+        if (maxPlayers > spawnPoints.Length) {
+            Debug.LogError("Not enough spawn points for all players!");
+            yield break; // Exit the coroutine early
+        }
+        
+        // Move each player to its corresponding spawn point
+        for (int i = 0; i < maxPlayers; i++)
+        {
+            GameObject player = players[i];
+
+            Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
+            
+            // Set the spawn point for the player
+            player.transform.position = spawnPoint.position;
+            player.transform.rotation = spawnPoint.rotation;
+
+            nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
+        }
+    }
+
+    void ShuffleArray<T>(T[] array)
      {
          // Fisher-Yates shuffle algorithm
          for (int i = array.Length - 1; i > 0; i--)
