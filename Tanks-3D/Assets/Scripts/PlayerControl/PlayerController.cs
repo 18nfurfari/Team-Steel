@@ -55,7 +55,7 @@ public class PlayerController : NetworkBehaviour
 
     private void OnEnable()
     {
-        _playerControlActionAsset.Enable();
+        //_playerControlActionAsset.Enable();
         // reloadTime = Time.time;
     }
 
