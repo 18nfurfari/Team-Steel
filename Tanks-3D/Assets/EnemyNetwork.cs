@@ -15,10 +15,7 @@ public class EnemyNetwork : NetworkBehaviour
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float shootingRange = 10f;
-
-
-    private GameObject[] spawnPoints;
-    private Vector3 spawners;
+    
 
 private Transform _playerTransform;
 
@@ -42,9 +39,15 @@ private Transform _playerTransform;
 
         if (distance < shootingRange)
         {
-            Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
-            bulletTransform.GetComponent<NetworkObject>().Spawn(true);
-            bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+            ShootPlayerServerRpc();
         }
+    }
+
+    [ServerRpc]
+    private void ShootPlayerServerRpc()
+    {
+        Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
+        bulletTransform.GetComponent<NetworkObject>().Spawn(true);
+        bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 }

@@ -13,10 +13,12 @@ using Random = UnityEngine.Random;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    [SerializeField] private Transform spawnedObjectPrefab;
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform bulletSpawnPoint;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject enemyPrefab1;
+    [SerializeField] private GameObject enemyPrefab2;
+    [SerializeField] private GameObject enemyPrefab3;
+    [SerializeField] private GameObject enemyPrefab4;
 
 // used to store player input
     // private Vector2 _playerInput;
@@ -70,6 +72,15 @@ public class PlayerNetwork : NetworkBehaviour
         currentAmmo = 5;
         playerHealth = 5.0f;
         //SetSpawnPoints();
+        
+        GameObject spawnedEnemy1 = Instantiate(enemyPrefab1);
+        spawnedEnemy1.GetComponent<NetworkObject>().Spawn(true);
+        GameObject spawnedEnemy2 = Instantiate(enemyPrefab2);
+        spawnedEnemy2.GetComponent<NetworkObject>().Spawn(true);
+        GameObject spawnedEnemy3 = Instantiate(enemyPrefab3);
+        spawnedEnemy3.GetComponent<NetworkObject>().Spawn(true);
+        GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
+        spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
         
         StartCoroutine(SpawnPlayers());
         
@@ -164,12 +175,6 @@ public class PlayerNetwork : NetworkBehaviour
         else if (cooldownTime > 0)
         {
             cooldownTime -= Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Transform spawnedObjectTransform = Instantiate(spawnedObjectPrefab);
-            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
         }
     }
 
