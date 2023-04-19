@@ -294,7 +294,7 @@ public class PlayerNetwork : NetworkBehaviour
     public void TakeDamage(float damage)
     {
         playerHealth -= damage;
-        slider.value = playerHealth;
+        playerHealthClientRpc(playerHealth);
 
         if (playerHealth <= 1.0f && playerHealth > 0) // if player is 1 shot from death
         {
@@ -422,4 +422,16 @@ public class PlayerNetwork : NetworkBehaviour
     //         spawnIndex.Value = 0;
     //     }
     // }
+
+    [ServerRpc]
+    public void playerHealthServerRpc(float playerHealth)
+    { 
+        slider.value = playerHealth;
+    }
+
+    [ClientRpc]
+    public void playerHealthClientRpc(float playerHealth)
+    {
+        playerHealthServerRpc(playerHealth);
+    }
 }
