@@ -24,8 +24,6 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
         reloading = false;
         reloadTime = 3.0f;
         currentAmmo = 5;
@@ -71,6 +69,9 @@ public class EnemyController : MonoBehaviour
             }
 
             timeSinceLastShot += Time.deltaTime;
+        }else
+        {
+             StartCoroutine(SetPlayerAsTargetAfterDelay(2f));
         }
     }
 
