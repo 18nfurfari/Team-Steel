@@ -247,16 +247,19 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc]
     private void ShootServerRpc()
     {
-        float hostFix = 0.0f;
         Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position,
             bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
         bulletTransform.GetComponent<NetworkObject>().Spawn(true);
-        bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-        
-        if (bulletTransform.position.y < -1.0f)
+
+        if (bulletTransform.position.y < 0.36f)
         {
-            bulletTransform.position = new Vector3(bulletTransform.position.x, 0.36f, bulletTransform.position.z);
+           //bulletTransform.position = new Vector3(bulletTransform.position.x, 0.36f, bulletTransform.position.z);
+           Vector3 pos = bulletTransform.position;
+           pos.y = 0.79f;
+           bulletTransform.position = pos;
         }
+        
+        bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [ServerRpc]
