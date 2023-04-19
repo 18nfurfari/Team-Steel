@@ -7,12 +7,17 @@ using Unity.Services.Lobbies.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 using Object = UnityEngine.Object;
 using Quaternion = System.Numerics.Quaternion;
 using Random = UnityEngine.Random;
+using Slider = UnityEngine.UI.Slider;
 
 public class PlayerNetwork : NetworkBehaviour
 {
+
+    public Slider slider;
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private GameObject enemyPrefab1;
@@ -289,6 +294,7 @@ public class PlayerNetwork : NetworkBehaviour
     public void TakeDamage(float damage)
     {
         playerHealth -= damage;
+        slider.value = playerHealth;
 
         if (playerHealth <= 1.0f && playerHealth > 0) // if player is 1 shot from death
         {
