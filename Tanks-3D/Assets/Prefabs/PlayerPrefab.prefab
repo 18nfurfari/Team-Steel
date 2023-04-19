@@ -943,11 +943,14 @@ MonoBehaviour:
   playerCam: {fileID: 2095761116434470186}
   playHUD: {fileID: 7795180638586537906}
   camSocket: {fileID: 2461326488664538145}
+  playerSpawn1: {x: -22.4, y: 0, z: -100.9}
+  playerSpawn2: {x: -51.3, y: 0, z: 90.3}
+  playerSpawn3: {x: 48.9, y: 0, z: 78.8}
+  playerSpawn4: {x: 91.3, y: 0, z: -97.7}
   playerHealth: 0
   _currentAmmoObject: {fileID: 736674228714210724}
   currentAmmo: 0
   _blackSmoke: {fileID: 6327088709994961466}
-  nextSpawnPointIndex: 0
 --- !u!114 &8057856276017357602
 MonoBehaviour:
   m_ObjectHideFlags: 0

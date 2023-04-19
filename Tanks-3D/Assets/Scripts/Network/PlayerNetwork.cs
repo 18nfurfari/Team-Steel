@@ -23,7 +23,7 @@ public class PlayerNetwork : NetworkBehaviour
 // used to store player input
     // private Vector2 _playerInput;
     private bool _fire;
-    
+
     // store reference to player's character controller to be used to move
     // [SerializeField] private CharacterController controller;
 
@@ -39,8 +39,12 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject playerCam;
     [SerializeField] private GameObject playHUD;
     [SerializeField] private GameObject camSocket;
+    [SerializeField] private Vector3 playerSpawn1;
+    [SerializeField] private Vector3 playerSpawn2;
+    [SerializeField] private Vector3 playerSpawn3;
+    [SerializeField] private Vector3 playerSpawn4;
 
-    // private PlayerControlActionAsset _playerControlActionAsset;
+// private PlayerControlActionAsset _playerControlActionAsset;
 
     // public Transform bulletSpawnPoint;
     //public GameObject bulletPrefab;
@@ -53,6 +57,7 @@ public class PlayerNetwork : NetworkBehaviour
     private bool reloading;
     private float reloadTime;
     private float cooldownTime;
+    private NetworkVariable<int> spawnIndex = new NetworkVariable<int>(0);
 
     [SerializeField] private GameObject _blackSmoke;
     
@@ -82,9 +87,51 @@ public class PlayerNetwork : NetworkBehaviour
         GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
         spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
         
-        StartCoroutine(SpawnPlayers());
-        
+        // StartCoroutine(SpawnPlayers());
+
+        // switch (spawnIndex.Value)
+        // {
+        //     case 0:
+        //         transform.position = playerSpawn1;
+        //         spawnIndex.Value++;
+        //         break;
+        //     case 1:
+        //         transform.position = playerSpawn2;
+        //         spawnIndex.Value++;
+        //         break;
+        //     case 2:
+        //         transform.position = playerSpawn3;
+        //         spawnIndex.Value++;
+        //         break;
+        //     case 3:
+        //         transform.position = playerSpawn4;
+        //         spawnIndex.Value = 0;
+        //         break;
+        // }
     }
+
+    // private void Start()
+    // {
+    //     switch (spawnIndex.Value)
+    //     {
+    //         case 0:
+    //             transform.position = playerSpawn1;
+    //             spawnIndex.Value++;
+    //             break;
+    //         case 1:
+    //             transform.position = playerSpawn2;
+    //             spawnIndex.Value++;
+    //             break;
+    //         case 2:
+    //             transform.position = playerSpawn3;
+    //             spawnIndex.Value++;
+    //             break;
+    //         case 3:
+    //             transform.position = playerSpawn4;
+    //             spawnIndex.Value = 0;
+    //             break;
+    //     }
+    // }
 
     private void Update()
     {
@@ -256,57 +303,57 @@ public class PlayerNetwork : NetworkBehaviour
     // Vector3(48.9000015,0,78.8000031)
     // Vector3(91.3000031,0,-97.6999969)
 
-    public int nextSpawnPointIndex = 0;
-    IEnumerator SpawnPlayers()
-    {
-        // Wait until all players are loaded
-        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
-
-        // Get an array of all GameObjects tagged as "Player"
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
-        // Get an array of all GameObjects tagged as "PlayerSpawn"
-        GameObject[] spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
-        Transform[] spawnPoints = new Transform[spawnPointsObjects.Length];
-
-        for (int i = 0; i < spawnPointsObjects.Length; i++)
-        {
-            spawnPoints[i] = spawnPointsObjects[i].transform;
-        }
-        
-        // Shuffle the spawn points
-        // ShuffleArray(spawnPoints);
-
-        // Get the max number of players between 1 and 4
-        int maxPlayers = Mathf.Clamp(players.Length, 1, 4);
-        
-        if (maxPlayers > spawnPoints.Length) {
-            Debug.LogError("Not enough spawn points for all players!");
-            yield break; // Exit the coroutine early
-        }
-        
-        // Move each player to its corresponding spawn point
-        for (int i = 0; i < maxPlayers; i++)
-        {
-            GameObject player = players[i];
-
-            Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
-            
-            // Set the spawn point for the player
-            player.transform.position = spawnPoint.position;
-            player.transform.rotation = spawnPoint.rotation;
-
-            nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
-        }
-    }
-
-    void ShuffleArray<T>(T[] array)
-     {
-         // Fisher-Yates shuffle algorithm
-         for (int i = array.Length - 1; i > 0; i--)
-         {
-             int j = UnityEngine.Random.Range(0, i + 1);
-             (array[i], array[j]) = (array[j], array[i]);
-         }
-     }
+    // public int nextSpawnPointIndex = 0;
+    // IEnumerator SpawnPlayers()
+    // {
+    //     // Wait until all players are loaded
+    //     yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
+    //
+    //     // Get an array of all GameObjects tagged as "Player"
+    //     GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+    //
+    //     // Get an array of all GameObjects tagged as "PlayerSpawn"
+    //     GameObject[] spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+    //     Transform[] spawnPoints = new Transform[spawnPointsObjects.Length];
+    //
+    //     for (int i = 0; i < spawnPointsObjects.Length; i++)
+    //     {
+    //         spawnPoints[i] = spawnPointsObjects[i].transform;
+    //     }
+    //     
+    //     // Shuffle the spawn points
+    //     // ShuffleArray(spawnPoints);
+    //
+    //     // Get the max number of players between 1 and 4
+    //     int maxPlayers = Mathf.Clamp(players.Length, 1, 4);
+    //     
+    //     if (maxPlayers > spawnPoints.Length) {
+    //         Debug.LogError("Not enough spawn points for all players!");
+    //         yield break; // Exit the coroutine early
+    //     }
+    //     
+    //     // Move each player to its corresponding spawn point
+    //     for (int i = 0; i < maxPlayers; i++)
+    //     {
+    //         GameObject player = players[i];
+    //
+    //         Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
+    //         
+    //         // Set the spawn point for the player
+    //         player.transform.position = spawnPoint.position;
+    //         player.transform.rotation = spawnPoint.rotation;
+    //
+    //         nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
+    //     }
+    // }
+    //
+    // void ShuffleArray<T>(T[] array)
+    //  {
+    //      // Fisher-Yates shuffle algorithm
+    //      for (int i = array.Length - 1; i > 0; i--)
+    //      {
+    //          int j = UnityEngine.Random.Range(0, i + 1);
+    //          (array[i], array[j]) = (array[j], array[i]);
+    //      }
+    //  }
 }
