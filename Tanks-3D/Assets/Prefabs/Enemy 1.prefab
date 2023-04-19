@@ -199,9 +199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf8186a87ceea042bd188e03afdf022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRange: 20
+  lookRange: 25
   bulletSpawnPoint: {fileID: 5228459175266598884}
-  bulletPrefab: {fileID: 8875725185264368890, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
   currentAmmo: 5
   bulletSpeed: 30
 --- !u!195 &5228459175991062838
@@ -271,7 +270,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8879107955535928596, guid: 3dcd8e4bdb5dbb942945c352f6f1e96e, type: 3}
   bulletSpawnPoint: {fileID: 5228459175266598884}
   bulletSpeed: 30
-  shootingRange: 10
+  shootingRange: 25
 --- !u!114 &3546256512092718784
 MonoBehaviour:
   m_ObjectHideFlags: 0
