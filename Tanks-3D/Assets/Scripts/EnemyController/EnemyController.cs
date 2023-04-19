@@ -41,25 +41,29 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (target != null)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, lookRange);
+        Collider playerCollider = null;
+
+        // Find the player collider within the colliders array
+        foreach (Collider collider in colliders)
         {
-            float distance = Vector3.Distance(target.position, transform.position);
-
-            if (reloading)
+            if (collider.CompareTag("Player"))
             {
-                Reload();
+                playerCollider = collider;
+                break;
             }
+        }
 
-            if (distance <= lookRange)
-            {
-                    FaceTarget();
-            }
+        // If the player collider was found, set it as the target and face it
+        if (playerCollider != null)
+        {
+            target = playerCollider.transform;
+            FaceTarget();
 
             // Check if enough time has passed since the last shot
-            if (distance <= lookRange && timeSinceLastShot >= shootDelay)
+            if (timeSinceLastShot >= shootDelay)
             {
                 if (!reloading)
                 {
@@ -67,13 +71,10 @@ public class EnemyController : MonoBehaviour
                     timeSinceLastShot = 0.0f;
                 }
             }
-
             timeSinceLastShot += Time.deltaTime;
-        }else
-        {
-             StartCoroutine(SetPlayerAsTargetAfterDelay(2f));
         }
     }
+
 
     void FaceTarget()
     {
