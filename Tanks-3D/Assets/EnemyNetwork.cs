@@ -39,15 +39,16 @@ private Transform _playerTransform;
 
         if (distance < shootingRange)
         {
-            ShootPlayerServerRpc();
+              ShootServerRpc();
         }
     }
 
     [ServerRpc]
-    private void ShootPlayerServerRpc()
-    {
-        Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
-        bulletTransform.GetComponent<NetworkObject>().Spawn(true);
-        bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-    }
+        private void ShootServerRpc()
+        {
+            Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position,
+                bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
+            bulletTransform.GetComponent<NetworkObject>().Spawn(true);
+            bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+        }
 }
