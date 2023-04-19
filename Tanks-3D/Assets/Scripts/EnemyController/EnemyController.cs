@@ -10,7 +10,6 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
 
     public Transform bulletSpawnPoint;
-    public GameObject bulletPrefab;
 
     public int currentAmmo;
     private bool reloading;
@@ -58,11 +57,7 @@ public class EnemyController : MonoBehaviour
 
             if (distance <= lookRange)
             {
-                agent.SetDestination(target.position);
-                if (distance <= agent.stoppingDistance)
-                {
                     FaceTarget();
-                }
             }
 
             // Check if enough time has passed since the last shot
@@ -101,11 +96,6 @@ public class EnemyController : MonoBehaviour
 
     private void Shoot()
     {
-       var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
-                        bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
-       bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed * Time.deltaTime;
-
-
 
         Debug.Log("FIRE!");
         currentAmmo--;

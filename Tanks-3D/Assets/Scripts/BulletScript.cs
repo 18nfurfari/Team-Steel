@@ -6,7 +6,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public float travelTime = 3.0f;
-    public float damage = 1.0f;
+    public float damage = 2.0f;
 
     private void Awake()
     {
