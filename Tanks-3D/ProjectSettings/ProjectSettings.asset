@@ -818,10 +818,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6f8e018e-018f-4e39-9de9-ef7256d2760c
+  cloudProjectId: 7428de7a-eeac-436e-9849-7b197478a857
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Tanks-3D (1)
+  projectName: Tanks-3D
   organizationId: galaxyrapid
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
