@@ -3,7 +3,23 @@ guid: 4f56438ffaf042b4c8c2b9e742f94e3b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - slider: {instanceID: 0}
+  - bulletPrefab: {instanceID: 0}
+  - bulletSpawnPoint: {instanceID: 0}
+  - enemyPrefab1: {instanceID: 0}
+  - enemyPrefab2: {instanceID: 0}
+  - enemyPrefab3: {instanceID: 0}
+  - enemyPrefab4: {instanceID: 0}
+  - _turret: {instanceID: 0}
+  - _leftTrack: {instanceID: 0}
+  - _rightTrack: {instanceID: 0}
+  - playerCam: {instanceID: 0}
+  - playHUD: {instanceID: 0}
+  - camSocket: {instanceID: 0}
+  - _currentAmmoObject: {instanceID: 0}
+  - _blackSmoke: {instanceID: 0}
+  - playerPrefab: {fileID: 2191251992303597032, guid: 03bd5e3ea2209eb49a5742f90b548d10, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

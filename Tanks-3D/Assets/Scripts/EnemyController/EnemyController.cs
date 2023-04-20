@@ -99,12 +99,12 @@ public class EnemyController : MonoBehaviour
     private void Shoot()
     {
 
-        Debug.Log("FIRE!");
+        //Debug.Log("FIRE!");
         currentAmmo--;
 
         if (currentAmmo <= 0)
         {
-            Debug.Log("Reloading!");
+            //Debug.Log("Reloading!");
             reloading = true;
             reloadTime = 2.0f;
         }

@@ -7,6 +7,7 @@ using Unity.Services.Lobbies.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking.Types;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 using Object = UnityEngine.Object;
@@ -65,10 +66,14 @@ public class PlayerNetwork : NetworkBehaviour
     private NetworkVariable<int> spawnIndex = new NetworkVariable<int>();
 
     [SerializeField] private GameObject _blackSmoke;
+    [SerializeField] private GameObject playerPrefab;
+    public GameObject[] spawnPointsObjects;
+    
 
 
     public override void OnNetworkSpawn()
     {
+        
         // SetSpawnIndexServerRpc();
         // SetSpawnsServerRpc();
         //_leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
@@ -84,7 +89,7 @@ public class PlayerNetwork : NetworkBehaviour
         currentAmmo = 5;
         playerHealth = 5.0f;
         //SetSpawnPoints();
-
+        
         GameObject spawnedEnemy1 = Instantiate(enemyPrefab1);
         spawnedEnemy1.GetComponent<NetworkObject>().Spawn(true);
         GameObject spawnedEnemy2 = Instantiate(enemyPrefab2);
@@ -94,8 +99,10 @@ public class PlayerNetwork : NetworkBehaviour
         GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
         spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
 
+        spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+        Debug.Log("Player Spawned In");
         StartCoroutine(SpawnPlayers());
-
+        
         // switch (spawnIndex.Value)
         // {
         //     case 0:
@@ -326,13 +333,13 @@ public class PlayerNetwork : NetworkBehaviour
     IEnumerator SpawnPlayers()
     {
         // Wait until all players are loaded
-        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
+        //yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
+        yield return new WaitForSeconds(3.0f);
     
         // Get an array of all GameObjects tagged as "Player"
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-    
+
         // Get an array of all GameObjects tagged as "PlayerSpawn"
-        GameObject[] spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
         Transform[] spawnPoints = new Transform[spawnPointsObjects.Length];
     
         for (int i = 0; i < spawnPointsObjects.Length; i++)
@@ -341,7 +348,7 @@ public class PlayerNetwork : NetworkBehaviour
         }
         
         // Shuffle the spawn points
-        // ShuffleArray(spawnPoints);
+        ShuffleArray(spawnPoints);
     
         // Get the max number of players between 1 and 4
         int maxPlayers = Mathf.Clamp(players.Length, 1, 4);
@@ -355,7 +362,7 @@ public class PlayerNetwork : NetworkBehaviour
         for (int i = 0; i < maxPlayers; i++)
         {
             GameObject player = players[i];
-    
+
             Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
             
             // Set the spawn point for the player
