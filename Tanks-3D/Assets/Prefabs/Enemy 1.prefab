@@ -203,6 +203,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 5228459175266598884}
   currentAmmo: 5
   bulletSpeed: 30
+  health: 2
 --- !u!195 &5228459175991062838
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -210,7 +211,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7091221560422413725}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1.2512944
   m_Speed: 3.5

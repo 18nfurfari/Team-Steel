@@ -45,10 +45,6 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject playerCam;
     [SerializeField] private GameObject playHUD;
     [SerializeField] private GameObject camSocket;
-    [SerializeField] private Vector3 playerSpawn1;
-    [SerializeField] private Vector3 playerSpawn2;
-    [SerializeField] private Vector3 playerSpawn3;
-    [SerializeField] private Vector3 playerSpawn4;
 
 // private PlayerControlActionAsset _playerControlActionAsset;
 
@@ -67,20 +63,28 @@ public class PlayerNetwork : NetworkBehaviour
 
     [SerializeField] private GameObject _blackSmoke;
     [SerializeField] private GameObject playerPrefab;
-    public GameObject[] spawnPointsObjects;
-    
+
+
+
+
 
 
     public override void OnNetworkSpawn()
     {
-        
-        // SetSpawnIndexServerRpc();
-        // SetSpawnsServerRpc();
-        //_leftTrack = GameObject.Find("Panzer_VI_E_Track_L");
-        //_rightTrack = GameObject.Find("Panzer_VI_E_Track_R");
-        //_turret = GameObject.Find("Panzer_VI_E_Turret");
-
-        //_currentAmmoObject = GameObject.Find("CurrentAmmo");
+    if (IsServer)
+        {
+        StartCoroutine(SetInitialSpawnPositions());
+            // Set spawn positions for all players
+            List<int> spawnPointsIndices = GetSpawnPointsIndices();
+            for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
+            {
+                NetworkClient networkClient = NetworkManager.Singleton.ConnectedClientsList[i];
+                if (networkClient.PlayerObject.TryGetComponent<PlayerNetwork>(out PlayerNetwork playerNetwork))
+                {
+                    playerNetwork.SetSpawnPositionClientRpc(spawnPointsIndices[i]);
+                }
+            }
+        }
         _currentAmmoText = _currentAmmoObject.GetComponent<TextMeshProUGUI>();
 
         reloading = false;
@@ -88,7 +92,6 @@ public class PlayerNetwork : NetworkBehaviour
         cooldownTime = 0.5f;
         currentAmmo = 5;
         playerHealth = 5.0f;
-        //SetSpawnPoints();
         
         GameObject spawnedEnemy1 = Instantiate(enemyPrefab1);
         spawnedEnemy1.GetComponent<NetworkObject>().Spawn(true);
@@ -98,54 +101,7 @@ public class PlayerNetwork : NetworkBehaviour
         spawnedEnemy3.GetComponent<NetworkObject>().Spawn(true);
         GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
         spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
-
-        spawnPointsObjects = GameObject.FindGameObjectsWithTag("PlayerSpawn");
-        Debug.Log("Player Spawned In");
-        StartCoroutine(SpawnPlayers());
-        
-        // switch (spawnIndex.Value)
-        // {
-        //     case 0:
-        //         transform.position = playerSpawn1;
-        //         spawnIndex.Value++;
-        //         break;
-        //     case 1:
-        //         transform.position = playerSpawn2;
-        //         spawnIndex.Value++;
-        //         break;
-        //     case 2:
-        //         transform.position = playerSpawn3;
-        //         spawnIndex.Value++;
-        //         break;
-        //     case 3:
-        //         transform.position = playerSpawn4;
-        //         spawnIndex.Value = 0;
-        //         break;
-        // }
     }
-
-    // private void Start()
-    // {
-    //     switch (spawnIndex.Value)
-    //     {
-    //         case 0:
-    //             transform.position = playerSpawn1;
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 1:
-    //             transform.position = playerSpawn2;
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 2:
-    //             transform.position = playerSpawn3;
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 3:
-    //             transform.position = playerSpawn4;
-    //             spawnIndex.Value = 0;
-    //             break;
-    //     }
-    // }
 
     private void Update()
     {
@@ -154,9 +110,14 @@ public class PlayerNetwork : NetworkBehaviour
             playerCam.SetActive(false);
             playHUD.SetActive(false);
             camSocket.SetActive(false);
-            _blackSmoke.SetActive(false);
-            return;
         }
+        else
+        {
+            playerCam.SetActive(true);
+            playHUD.SetActive(true);
+            camSocket.SetActive(true);
+        }
+
 
         // Track Movement
         if (Input.GetKey(KeyCode.W))
@@ -207,13 +168,7 @@ public class PlayerNetwork : NetworkBehaviour
         // Turret Firing
         if (Input.GetKeyDown(KeyCode.Space) && !reloading)
         {
-            // var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position,
-            //     bulletSpawnPoint.rotation * Quaternion.Euler(90, 0, 0));
-            // bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
-            // Transform bulletTransform = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation * UnityEngine.Quaternion.Euler(90, 0, 0));
-            // bulletTransform.GetComponent<NetworkObject>().Spawn(true);
-            // bulletTransform.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
             ShootServerRpc();
 
@@ -286,17 +241,6 @@ public class PlayerNetwork : NetworkBehaviour
         _turret.transform.Rotate(transform.up, rotation);
     }
 
-    // [ServerRpc]
-    // private void BlackSmokeVisibleServerRpc(bool visible)
-    // {
-    //     BlackSmokeVisibleClientRpc(visible);
-    // }
-    //
-    // [ClientRpc]
-    // private void BlackSmokeVisibleClientRpc(bool visible)
-    // {
-    //     _blackSmoke.SetActive(visible);
-    // }
 
     public void TakeDamage(float damage)
     {
@@ -329,104 +273,69 @@ public class PlayerNetwork : NetworkBehaviour
     // Vector3(48.9000015,0,78.8000031)
     // Vector3(91.3000031,0,-97.6999969)
 
-    public int nextSpawnPointIndex = 0;
-    IEnumerator SpawnPlayers()
-    {
-        // Wait until all players are loaded
-        //yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Player").Length >= 1);
-        yield return new WaitForSeconds(3.0f);
-    
-        // Get an array of all GameObjects tagged as "Player"
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-        // Get an array of all GameObjects tagged as "PlayerSpawn"
-        Transform[] spawnPoints = new Transform[spawnPointsObjects.Length];
-    
-        for (int i = 0; i < spawnPointsObjects.Length; i++)
-        {
-            spawnPoints[i] = spawnPointsObjects[i].transform;
-        }
-        
-        // Shuffle the spawn points
-        ShuffleArray(spawnPoints);
-    
-        // Get the max number of players between 1 and 4
-        int maxPlayers = Mathf.Clamp(players.Length, 1, 4);
-        
-        if (maxPlayers > spawnPoints.Length) {
-            Debug.LogError("Not enough spawn points for all players!");
-            yield break; // Exit the coroutine early
-        }
-        
-        // Move each player to its corresponding spawn point
-        for (int i = 0; i < maxPlayers; i++)
-        {
-            GameObject player = players[i];
 
-            Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
-            
-            // Set the spawn point for the player
-            player.transform.position = spawnPoint.position;
-            player.transform.rotation = spawnPoint.rotation;
-    
-            nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
-        }
-    }
-    
-    void ShuffleArray<T>(T[] array)
-     {
-         // Fisher-Yates shuffle algorithm
-         for (int i = array.Length - 1; i > 0; i--)
-         {
-             int j = UnityEngine.Random.Range(0, i + 1);
-             (array[i], array[j]) = (array[j], array[i]);
-         }
-     }
-    
-    // Spawn point list 
-    // Vector3(-22.3999996, 0, -100.900002)
-    // Vector3(-51.2999992,0,90.3000031)
-    // Vector3(48.9000015,0,78.8000031)
-    // Vector3(91.3000031,0,-97.6999969)
+       [ServerRpc]
+       public void SetSpawnPositionsServerRpc(int[] spawnPointsIndices)
+       {
+           Debug.Log("Spawn point indices: " + string.Join(", ", spawnPointsIndices));
 
-    // [ServerRpc]
-    // private void SetSpawnsServerRpc()
-    // {
-    //     switch (spawnIndex.Value)
-    //     {
-    //         case 0:
-    //             transform.position = new Vector3((float)-22.3999996, 0, (float)-100.900002);
-    //             transform.rotation = new UnityEngine.Quaternion(0, 0, 0, 0);
-    //             Debug.Log("Spawn Set");
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 1:
-    //             transform.position = new Vector3((float)-51.2999992,0,(float)90.3000031);
-    //             transform.rotation = new UnityEngine.Quaternion(0, 0, 0, 0);
-    //             Debug.Log("Spawn Set");
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 2:
-    //             transform.position = new Vector3((float)48.9000015,0,(float)78.8000031);
-    //             transform.rotation = new UnityEngine.Quaternion(0, 0, 0, 0);
-    //             Debug.Log("Spawn Set");
-    //             spawnIndex.Value++;
-    //             break;
-    //         case 3:
-    //             transform.position = new Vector3((float)91.3000031,0,(float)-97.6999969);
-    //             transform.rotation = new UnityEngine.Quaternion(0, 0, 0, 0);
-    //             Debug.Log("Spawn Set");
-    //             spawnIndex.Value = 0;
-    //             break;
-    //     }
-    // }
+           for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
+           {
+               NetworkClient networkClient = NetworkManager.Singleton.ConnectedClientsList[i];
+               if (networkClient.PlayerObject.TryGetComponent<PlayerNetwork>(out PlayerNetwork playerNetwork))
+               {
+                   playerNetwork.SetSpawnPositionClientRpc(spawnPointsIndices[i]);
+               }
+           }
+       }
 
-    // [ServerRpc]
-    // private void SetSpawnIndexServerRpc()
-    // {
-    //     if (spawnIndex.Value == null)
-    //     {
-    //         spawnIndex.Value = 0;
-    //     }
-    // }
-}
+      [ClientRpc]
+      private void SetSpawnPositionClientRpc(int spawnPointIndex)
+      {
+          Debug.Log("Player " + GetComponent<NetworkObject>().OwnerClientId + " position before: " + transform.position);
+
+          Transform spawnPointTransform = SpawnPointManager.Instance.GetSpawnPoints()[spawnPointIndex].transform;
+          transform.position = spawnPointTransform.position;
+          transform.rotation = spawnPointTransform.rotation;
+
+          Debug.Log("Player " + GetComponent<NetworkObject>().OwnerClientId + " position after: " + transform.position);
+      }
+
+
+
+
+     private List<int> GetSpawnPointsIndices()
+      {
+          int playerCount = NetworkManager.Singleton.ConnectedClientsList.Count;
+          List<int> spawnPointsIndices = new List<int>(playerCount);
+          int spawnPointsCount = SpawnPointManager.Instance.GetSpawnPoints().Length;
+
+          for (int i = 0; i < playerCount; i++)
+          {
+              spawnPointsIndices.Add(i % spawnPointsCount);
+          }
+
+          Debug.Log("Spawn point indices generated: " + string.Join(", ", spawnPointsIndices));
+          return spawnPointsIndices;
+      }
+
+      private IEnumerator SetInitialSpawnPositions()
+      {
+          yield return new WaitForSeconds(0.1f);
+
+          // Set spawn positions for all players
+          List<int> spawnPointsIndices = GetSpawnPointsIndices();
+          for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
+          {
+              NetworkClient networkClient = NetworkManager.Singleton.ConnectedClientsList[i];
+              if (networkClient.PlayerObject.TryGetComponent<PlayerNetwork>(out PlayerNetwork playerNetwork))
+              {
+                  playerNetwork.SetSpawnPositionClientRpc(spawnPointsIndices[i]);
+              }
+          }
+      }
+
+
+
+   }
