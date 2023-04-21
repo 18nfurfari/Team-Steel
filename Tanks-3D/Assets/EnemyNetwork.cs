@@ -15,9 +15,11 @@ public class EnemyNetwork : NetworkBehaviour
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float shootingRange = 10f;
-    
+
+
 
 private Transform _playerTransform;
+private bool _hasShotPlayer = false;
 
     public override void OnNetworkSpawn()
     {
@@ -37,10 +39,12 @@ private Transform _playerTransform;
 
         float distance = Vector3.Distance(transform.position, _playerTransform.position);
 
-        if (distance < shootingRange)
-        {
-              ShootServerRpc();
-        }
+              if (distance < shootingRange && !_hasShotPlayer)
+              {
+                    _hasShotPlayer = true;
+                    ShootServerRpc();
+              }
+              _hasShotPlayer = false;
     }
 
     [ServerRpc]

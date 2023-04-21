@@ -23,8 +23,9 @@ public class BulletScript : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Destroy enemy in 1 hit
-            Destroy(collision.gameObject);
+
+             collision.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
+
         }
 
         // Destroy bullet

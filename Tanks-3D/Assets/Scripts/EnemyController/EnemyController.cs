@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private float reloadTime;
 
     [SerializeField] private float bulletSpeed = 30f;
+    [SerializeField] private float health = 2;
 
     // Time between shots
     private float shootDelay = 1.0f;
@@ -109,6 +110,16 @@ public class EnemyController : MonoBehaviour
             reloadTime = 2.0f;
         }
     }
+
+        public void TakeDamage(float damage)
+            {
+                health -= damage;
+                if(health<=0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+
 
     void OnDrawGizmosSelected()
     {
