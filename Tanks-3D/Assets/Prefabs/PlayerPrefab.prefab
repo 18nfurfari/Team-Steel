@@ -949,11 +949,6 @@ MonoBehaviour:
   currentAmmo: 0
   _blackSmoke: {fileID: 6327088709994961466}
   playerPrefab: {fileID: 0}
-  spawnPointsObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &8057856276017357602
 MonoBehaviour:
   m_ObjectHideFlags: 0
