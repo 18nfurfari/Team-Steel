@@ -15,7 +15,6 @@ public class EnemyController : MonoBehaviour
     private bool reloading;
     private float reloadTime;
 
-    [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float health = 2;
 
     // Time between shots

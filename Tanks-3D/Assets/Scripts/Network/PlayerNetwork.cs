@@ -119,6 +119,7 @@ public class PlayerNetwork : NetworkBehaviour
         }
 
 
+
         // Track Movement
         if (Input.GetKey(KeyCode.W))
         {
@@ -242,36 +243,54 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
 
+
     public void TakeDamage(float damage)
     {
         playerHealth -= damage;
-        slider.value = playerHealth;
+        //slider.value = playerHealth;
+        playHealthServerRpc(playerHealth);
 
         if (playerHealth <= 1.0f && playerHealth > 0) // if player is 1 shot from death
         {
-            // if (IsOwner)
-            // {
-            //     BlackSmokeVisibleServerRpc(true);
-            // }
-            // _blackSmoke.SetActive(true);
+             if (IsOwner)
+             {
+                 BlackSmokeVisibleServerRpc(true);
+             }
         }
         else if (playerHealth <= 0) // player health hits 0 and dies
         {
-            // Player is dead
             Destroy(gameObject);
-            // if (IsOwner)
-            // {
-            //     BlackSmokeVisibleServerRpc(false);
-            // }
-            // _blackSmoke.SetActive(false);
+             if (IsOwner)
+             {
+                 BlackSmokeVisibleServerRpc(false);
+             }
         }
     }
 
-    // Spawn point list 
-    // Vector3(-22.3999996, 0, -100.900002)
-    // Vector3(-51.2999992,0,90.3000031)
-    // Vector3(48.9000015,0,78.8000031)
-    // Vector3(91.3000031,0,-97.6999969)
+        [ServerRpc(RequireOwnership = false)]
+        public void playHealthServerRpc(float playerHealth)
+        {
+            playerHealthClientRpc(playerHealth);
+        }
+
+        [ClientRpc]
+        public void playerHealthClientRpc(float playerHealth)
+        {
+            slider.value = playerHealth;
+
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void BlackSmokeVisibleServerRpc(bool visible)
+        {
+                BlackSmokeVisibleClientRpc(visible);
+        }
+
+        [ClientRpc]
+        public void BlackSmokeVisibleClientRpc(bool visible)
+        {
+                _blackSmoke.SetActive(visible);
+        }
 
 
 
@@ -335,7 +354,5 @@ public class PlayerNetwork : NetworkBehaviour
               }
           }
       }
-
-
 
    }
