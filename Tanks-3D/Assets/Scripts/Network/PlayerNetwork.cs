@@ -93,14 +93,17 @@ public class PlayerNetwork : NetworkBehaviour
         currentAmmo = 5;
         playerHealth = 5.0f;
         
-        GameObject spawnedEnemy1 = Instantiate(enemyPrefab1);
-        spawnedEnemy1.GetComponent<NetworkObject>().Spawn(true);
-        GameObject spawnedEnemy2 = Instantiate(enemyPrefab2);
-        spawnedEnemy2.GetComponent<NetworkObject>().Spawn(true);
-        GameObject spawnedEnemy3 = Instantiate(enemyPrefab3);
-        spawnedEnemy3.GetComponent<NetworkObject>().Spawn(true);
-        GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
-        spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
+        if (IsHost)
+        {
+            GameObject spawnedEnemy1 = Instantiate(enemyPrefab1);
+            spawnedEnemy1.GetComponent<NetworkObject>().Spawn(true);
+            GameObject spawnedEnemy2 = Instantiate(enemyPrefab2);
+            spawnedEnemy2.GetComponent<NetworkObject>().Spawn(true);
+            GameObject spawnedEnemy3 = Instantiate(enemyPrefab3);
+            spawnedEnemy3.GetComponent<NetworkObject>().Spawn(true);
+            GameObject spawnedEnemy4 = Instantiate(enemyPrefab4);
+            spawnedEnemy4.GetComponent<NetworkObject>().Spawn(true);
+        }
     }
 
     private void Update()
